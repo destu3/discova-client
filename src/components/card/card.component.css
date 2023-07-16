@@ -1,0 +1,49 @@
+.title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-overlay {
+  min-height: 50px;
+  background-color: rgba(41, 41, 41, 0.8);
+  transition: all 0.3s ease-in-out;
+}
+
+.card-overlay {
+  transform: translateY(100%);
+}
+
+.card-overlay:before {
+  background: var(--main-color);
+  content: '';
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.15;
+  position: absolute;
+}
+
+.card:hover .card-overlay {
+  transform: translateY(0);
+}
+
+/* Style for non-hoverable devices */
+@media (hover: none) {
+  .card-overlay {
+    transform: translateY(0);
+  }
+}
+
+.img-skeleton::before {
+  background: var(--main-color);
+  content: '';
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.05;
+  position: absolute;
+}

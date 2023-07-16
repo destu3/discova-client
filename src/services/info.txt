@@ -1,0 +1,7 @@
+The services folder is a central location within the project that houses various service files. 
+These service files are responsible for encapsulating the logic related to specific functionalities/features or interactions with external services that components use.
+
+In this folder, you'll find service modules that handle tasks such as making API calls, performing data fetching operations, implementing utility functions, or managing interactions with third-party services.
+These services act as a bridge between application components and the backend or external services.
+
+This approach was used instead of putting the the logic directly into the component files. Allowing for reusability, readability, scalability and maintainability 

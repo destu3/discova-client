@@ -1,0 +1,19 @@
+.field-values {
+  --input-elements-grey: #898a8f;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 0;
+  overflow: hidden;
+}
+
+.field-values.visible {
+  max-height: var(--field-values-height);
+}
+
+/* overriding inputs from antd library */
+.ant-input-number-input {
+  text-align: center !important;
+}
+
+.filter-section .filter:nth-of-type(1) header {
+  margin-top: 1px;
+}

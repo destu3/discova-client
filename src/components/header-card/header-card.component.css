@@ -1,0 +1,13 @@
+.featured-desc {
+  display: -webkit-box;
+  display: -moz-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.featured-genres .genre {
+  white-space: nowrap;
+}

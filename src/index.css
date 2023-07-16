@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+  font-family: 'Roboto';
+  --overlay-grey: #1e1e1e;
+  --main-text: #d8d8d8;
+  --secondary-text: #b4b4bb;
+  --heading-grey: #cccccc;
+  --main-brand: #bb86fc;
+  --error-red: #cf6679;
+  --underline-grey: #1c1b1a;
+}
+
+body {
+  min-height: 100vh;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .primary-btn {
+  @apply text-gray-100 bg-[#292927] hover:bg-zinc-700 p-2 px-4 rounded-lg  transition-all;
+} */

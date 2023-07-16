@@ -1,0 +1,19 @@
+.featured-sect {
+  margin-bottom: 60px;
+}
+
+/* re-positioning arrows */
+
+.splide__arrow {
+  background: rgba(204, 204, 204, 1) !important;
+}
+
+.featured-sect .splide__arrow {
+  top: 58% !important;
+}
+
+@media (hover: none) {
+  .splide__arrow {
+    display: none !important;
+  }
+}

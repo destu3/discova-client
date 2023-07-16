@@ -1,0 +1,16 @@
+.form-input {
+  @apply p-3 rounded-md w-full transition-all duration-300 mb-4 border-2 border-solid text-[#808080] text-sm border-[#333333] bg-transparent placeholder:text-[#808080] outline-none focus:outline-none focus:border-[#B4B4BB];
+}
+
+.form-label {
+  @apply text-[#B4B4BB] block mb-1 text-sm font-medium;
+}
+
+.form-btn {
+  @apply p-3 bg-gray-100 hover:shadow-[0_5px_15px_rgba(243,244,246,0.2)] w-full text-base cursor-pointer transition-all rounded-md text-gray-900 font-semibold;
+}
+
+.form-wrapper {
+  background-color: var(--overlay-grey);
+  @apply w-[90%] sm:w-[500px] flex flex-col rounded-md items-center mx-auto pt-10 pb-14 my-5;
+}
