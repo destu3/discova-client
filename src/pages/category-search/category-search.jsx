@@ -4,6 +4,8 @@ import { search } from '../../services/internal-api/anime';
 import FilterOption from '../../components/filter-option/filter-option';
 import ResultContainer from '../../components/result-container/result-container';
 import { QueryContext } from '../../contexts/query.context';
+import { AlertContext } from '../../contexts/alert.context';
+import { manageAlert } from '../../helpers//alert-utils';
 import genres from '../../data/genres.json';
 import './category-search.component.css';
 
@@ -16,6 +18,7 @@ const CategorySearch = ({ name }) => {
   const [moreLoading, setMoreLoading] = useState(false);
   const [debounceId, setDebounceId] = useState(null);
   const { query, setQuery } = useContext(QueryContext);
+  const { alert, setAlert } = useContext(AlertContext);
 
   // Handle input change event
   const handleChange = async (e, _newQuery) => {
@@ -29,9 +32,15 @@ const CategorySearch = ({ name }) => {
         : { ...query, page: 1, search: value };
       setQuery(newQuery);
       setLoading(true);
-      const results = await search(newQuery);
-      setData(results.mediaArray);
-      setLoading(false);
+      try {
+        const results = await search(newQuery);
+        setData(results.mediaArray);
+        setLoading(false);
+      } catch (err) {
+        manageAlert(err, alert, setAlert);
+        setData([]);
+        setLoading(false);
+      }
     }, 700);
 
     setDebounceId(timeoutId);
@@ -39,8 +48,6 @@ const CategorySearch = ({ name }) => {
 
   // Perform default search
   const defaultSearch = async () => {
-    clearTimeout(debounceId);
-
     const newQuery = { ...query, page: 1 };
     setQuery(newQuery);
 
@@ -65,25 +72,40 @@ const CategorySearch = ({ name }) => {
 
   // Handle load more action
   const handleLoadMore = async () => {
-    const newQuery = { ...query, page: ++query.page };
+    if (
+      document.documentElement.scrollTop +
+        document.documentElement.clientHeight ===
+      document.documentElement.scrollHeight
+    ) {
+      const newQuery = { ...query, page: ++query.page };
 
-    setQuery(newQuery);
-    setMoreLoading(true);
-    const results = await search(newQuery);
-    if (results.status === 'failed') {
-      setMoreLoading(false);
-      return console.log('No more results');
+      setQuery(newQuery);
+      setMoreLoading(true);
+      try {
+        const results = await search(newQuery);
+        const mediaArray = handleDuplicates(data, results.mediaArray);
+        const appended = [...data, ...mediaArray];
+        setData(appended);
+        setMoreLoading(false);
+      } catch (err) {
+        manageAlert(err, alert, setAlert);
+        setMoreLoading(false);
+      }
     }
-    const mediaArray = handleDuplicates(data, results.mediaArray);
-    const appended = [...data, ...mediaArray];
-    setData(appended);
-    setMoreLoading(false);
   };
 
-  // Render results with search=""
   useEffect(() => {
     defaultSearch();
   }, []);
+
+  // Render results with search=""
+  useEffect(() => {
+    document.addEventListener('scroll', handleLoadMore);
+
+    return () => {
+      document.removeEventListener('scroll', handleLoadMore);
+    };
+  }, [data]);
 
   return (
     <div className="relative p-2" aria-label={`content-type-${name}`}>
@@ -149,15 +171,6 @@ const CategorySearch = ({ name }) => {
             moreLoading={moreLoading}
             data={data}
           />
-
-          {/* Render the load more button */}
-          <button
-            title="load more"
-            className="load-more text-xl mt-5"
-            onClick={handleLoadMore}
-          >
-            <i className="fa-solid fa-angles-down"></i>
-          </button>
         </div>
       </div>
     </div>

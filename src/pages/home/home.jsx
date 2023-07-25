@@ -17,31 +17,34 @@ const Home = () => {
           speed: 1500,
           type: 'loop',
           autoplay: true,
+          drag: true,
+          snap: true,
+          waitForTransition: true,
           pagination: false,
           interval: 7500,
           perPage: 1,
           pauseOnFocus: true,
         }}
-        dataFetcher={getTrending}
+        dataFetcher={getPopularThisSeason}
         ariaLabel="Featured Header Section"
         featuredHeader={true}
       />
 
       <main className="w-11/12 mt-10 sm:mt-20 mx-auto px-2 pb-5">
-        {/* Seasons trending section */}
-        <FeaturedSection
-          className="featured-sect results-container w-full featured-sect splide"
-          dataFetcher={getPopularThisSeason}
-          ariaLabel="Seasons trending section"
-          title="Popular this Season"
-        />
-
         {/* Trending Section */}
         <FeaturedSection
           className="featured-sect results-container w-full featured-sect splide"
           dataFetcher={getTrending}
           ariaLabel="Trending Section"
           title="Trending"
+        />
+
+        {/* Seasons trending section */}
+        <FeaturedSection
+          className="featured-sect results-container w-full featured-sect splide"
+          dataFetcher={getPopularThisSeason}
+          ariaLabel="Seasons trending section"
+          title="Popular this Season"
         />
 
         {/* Upcoming Section */}

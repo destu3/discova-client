@@ -1,0 +1,9 @@
+/* alert component styling */
+
+.success {
+  background-color: var(--success-green);
+  border: 2px solid #6eaf3d;
+}
+
+.error {
+}

@@ -15,6 +15,8 @@ export const fields = `
     site
     thumbnail
   }
+  season
+  seasonYear
   status
   bannerImage
   genres

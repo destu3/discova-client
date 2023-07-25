@@ -2,12 +2,17 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import slugify from 'slugify';
 import SkeletonCard from '../skeleton-loaders/skeleton-card';
+import {
+  calculateDaysToAiring,
+  showAiringInfo,
+} from '../../helpers/anime-utils';
 import './card.component.css';
 
 const Card = ({ anime }) => {
   const [posterLoaded, setPosterLoaded] = useState(false);
 
   const title = anime.title.english || anime.title.romaji || anime.title.native;
+  const { status } = anime;
 
   const slug = slugify(title, {
     lower: true,
@@ -19,9 +24,9 @@ const Card = ({ anime }) => {
   };
 
   return (
-    <div className="aspect-[37/53] w-full relative cursor-pointer rounded-[4px] overflow-hidden">
+    <div className="aspect-[37/53] w-full relative rounded-[4px] overflow-hidden">
       <Link
-        className={`img-cover cursor-pointer relative transition-all block w-full h-full duration-[400ms] rounded-[4px] ${
+        className={`img-cover relative transition-all block w-full h-full duration-[400ms] rounded-[4px] ${
           posterLoaded ? 'block' : 'opacity-0'
         }`}
         to={`/anime/${slug}/${anime.id}`}
@@ -42,14 +47,23 @@ const Card = ({ anime }) => {
         />
       )}
 
-      <div className="card-overlay flex rounded-b-[4px] absolute bottom-0 left-0 w-full p-2">
+      <div className="card-overlay rounded-b-[4px] absolute bottom-0 left-0 w-full p-2">
         <Link
           to={`/anime/${slug}/${anime.id}`}
-          className="transition-all duration-[400ms] title font-semibold relative text-[0.9rem] z-10 md:text-[0.85rem]"
+          className="transition-all duration-[400ms] mb-[2px] leading-4 title font-semibold relative text-[0.82rem] z-10 md:text-[0.9rem]"
           title={title}
         >
           {title}
         </Link>
+        {status === 'RELEASING' ? (
+          <p className="airing-info text-xs md:text-[0.84rem] font-bold">
+            {calculateDaysToAiring(anime)}
+          </p>
+        ) : (
+          <p className="airing-info text-xs md:text-[0.84rem] font-bold">
+            {showAiringInfo(anime)}
+          </p>
+        )}
       </div>
     </div>
   );

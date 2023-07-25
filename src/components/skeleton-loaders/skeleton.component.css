@@ -13,7 +13,7 @@
     transparent
   );
   transform: translateX(-100%);
-  animation: loading 2s infinite;
+  animation: loading 2.5s infinite;
 }
 
 /* .search-results .skeleton-title::before,

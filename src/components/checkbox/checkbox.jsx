@@ -59,15 +59,25 @@ const Checkbox = props => {
   return (
     <div className="checkbox-wrapper">
       {/* Checkbox input */}
-      <input
-        data-value={value}
-        type="checkbox"
-        onClick={handleClick}
-        id={randomId}
-        className="checkbox"
-        checked={currentSeason === value}
-        readOnly
-      />
+      {isSeason ? (
+        <input
+          data-value={value}
+          type="checkbox"
+          onClick={handleClick}
+          id={randomId}
+          className="checkbox"
+          checked={currentSeason === value}
+          readOnly
+        />
+      ) : (
+        <input
+          data-value={value}
+          type="checkbox"
+          onClick={handleClick}
+          id={randomId}
+          className="checkbox"
+        />
+      )}
 
       {/* Label for the checkbox */}
       <label htmlFor={randomId} className="field-value block font-medium">

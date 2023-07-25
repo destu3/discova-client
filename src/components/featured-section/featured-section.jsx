@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
+import { AlertContext } from '../../contexts/alert.context';
 import HeaderCard from '../../components/header-card/header-card';
 import SkeletonHeader from '../../components/skeleton-loaders/skeleton-header';
 import Card from '../card/card';
+import { manageAlert } from '../../helpers/alert-utils';
 import './featured-section.component.css';
 import SkeletonCard from '../skeleton-loaders/skeleton-card';
 
@@ -14,12 +16,17 @@ const FeaturedSection = props => {
   // State for loading and data
   const [state, setState] = useState({ loading: true, data: [] });
   const { loading, data } = state;
+  const { alert, setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     (async () => {
-      const data = await dataFetcher();
-      const stateClone = { ...state, data: data, loading: false };
-      setState(stateClone);
+      try {
+        const data = await dataFetcher();
+        const stateClone = { ...state, data: data, loading: false };
+        setState(stateClone);
+      } catch (err) {
+        manageAlert(err, alert, setAlert);
+      }
     })();
   }, []);
 

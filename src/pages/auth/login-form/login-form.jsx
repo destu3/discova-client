@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AlertContext } from '../../../contexts/alert.context';
+import { manageAlert } from '../../../helpers/alert-utils';
 import '../auth.css';
 
 // Components
@@ -15,8 +17,8 @@ const defaultFields = {
 
 const LoginForm = () => {
   const [fields, setFields] = useState(defaultFields);
-
   const { email, password } = fields;
+  const { alert, setAlert } = useContext(AlertContext);
 
   // Handle input change event
   const handleInputChange = e => {
@@ -27,7 +29,15 @@ const LoginForm = () => {
   // Handle form submit event
   const handleSubmit = async e => {
     e.preventDefault();
-    login(email, password);
+    try {
+      await login(email, password, setAlert, {
+        ...alert,
+        type: 'success',
+        visible: true,
+      });
+    } catch (err) {
+      manageAlert(err, alert, setAlert);
+    }
   };
 
   return (

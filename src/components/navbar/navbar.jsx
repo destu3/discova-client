@@ -21,7 +21,7 @@ const Navbar = () => {
         </NavLink>
 
         {/* Main Menu */}
-        <div className=" hidden md:flex items-center gap-3">
+        {/* <div className=" hidden md:flex items-center gap-3">
           <ul className="items-center flex gap-6 text-sm">
             <li>
               <NavLink to="/" className="nav-link-text">
@@ -44,7 +44,7 @@ const Navbar = () => {
               </NavLink>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Right Menu */}
         <div className="right flex items-center gap-3 text-sm">

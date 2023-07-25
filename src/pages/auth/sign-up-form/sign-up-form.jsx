@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import { AlertContext } from '../../../contexts/alert.context';
+import { manageAlert } from '../../../helpers/alert-utils';
 import FormInput from '../../../components/form-input/form-input';
+
+// Services
+import { register } from '../../../services/internal-api/auth/registration';
 
 const defaultFields = {
   email: '',
@@ -13,8 +17,9 @@ const defaultFields = {
 
 const SignUpForm = () => {
   const [fields, setFields] = useState(defaultFields);
-
+  const [preview, setPreview] = useState('');
   const { email, username, fullName, password, confirmPassword } = fields;
+  const { alert, setAlert } = useContext(AlertContext);
 
   // Handle input change event
   const handleInputChange = e => {
@@ -23,9 +28,31 @@ const SignUpForm = () => {
   };
 
   // Handle form submit event
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    window.location.assign('/');
+    try {
+      await register({ ...fields }, setAlert, {
+        ...alert,
+        type: 'success',
+        visible: true,
+      });
+    } catch (err) {
+      manageAlert(err, alert, setAlert);
+    }
+  };
+
+  // Preview an image selected from an input file element.
+  const previewImage = e => {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    if (!file) return;
+
+    reader.readAsDataURL(file); // reads the file and returns a dataURL with the data represented as a base64 encoded string
+    reader.onload = function () {
+      const result = this.result;
+      setFields({ ...fields, image: result });
+      setPreview(result);
+    };
   };
 
   return (
@@ -90,8 +117,32 @@ const SignUpForm = () => {
             label="Confirm Password"
           />
 
+          <label className="select-pfp my-2" role="button" htmlFor="pfp">
+            Choose your profile picture
+            <div className="disclaimer text-xs">
+              Please select a square image
+            </div>
+          </label>
+          <input
+            className="opacity-0 w-0 h-0"
+            type="file"
+            name="pfp"
+            id="pfp"
+            accept="image/*"
+            onChange={previewImage}
+          />
+          {preview && (
+            <div className="thumbnail flex justify-center w-full aspect-square">
+              <img
+                className="rounded-md aspect-square w-full"
+                src={preview}
+                alt="thumbnail"
+              />
+            </div>
+          )}
+
           {/* Render the Sign Up button */}
-          <button onClick={handleSubmit} className="form-btn my-6">
+          <button onClick={handleSubmit} className="form-btn my-6 mt-9">
             Sign Up
           </button>
 

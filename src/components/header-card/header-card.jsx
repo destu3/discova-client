@@ -27,7 +27,7 @@ const HeaderCard = ({ anime }) => {
         />
 
         {/* Featured info */}
-        <div className="featured-info p-4 flex-1 overflow-hidden">
+        <div className="featured-info p-2 sm:p-4 flex-1 overflow-hidden">
           {/* Title */}
           <h2 className="text-base md:text-2xl font-bold text-[var(--main-brand)] mb-2">
             {anime.title.english || anime.title.romaji || anime.title.native}
@@ -39,13 +39,13 @@ const HeaderCard = ({ anime }) => {
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(anime.description),
             }}
-            className="lg:text-lg font-medium mb-3 lg:mb-5 text-[var(--main-text)] featured-desc"
+            className="md:text-lg font-medium mb-3 lg:mb-5 text-[var(--main-text)] featured-desc"
           ></p>
 
           {/* Genres */}
-          <div className="text-[var(--main-text)] items-center featured-genres max-w-[100%] whitespace-nowrap overflow-hidden overflow-ellipsis">
+          <div className="text-[var(--main-text)] items-center featured-genres max-w-[100%]">
             <div className="genres flex flex-wrap items-center">
-              <i className="fa-solid fa-tags lg:text-lg text-[var(--main-text)] pr-2" />
+              <i className="hidden sm:inline fa-solid fa-tags lg:text-lg text-[var(--main-text)] pr-2" />
 
               {/* Genre links */}
               {anime.genres.map(genre => (

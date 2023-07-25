@@ -1,6 +1,6 @@
 import { handleResponse } from '../../../helpers/api-utils';
 /**
- * Fetches the current user from the server.
+ * Fetches the current user
  * @returns {Promise<Object>} A promise that resolves to the current user data.
  */
 export const getCurrentUser = async () => {
@@ -12,6 +12,6 @@ export const getCurrentUser = async () => {
     const data = await handleResponse(res);
     return data;
   } catch (err) {
-    console.log(err); // Log any errors that occur during the request
+    console.log(err.message + ' ' + 'or no User is currently logged in');
   }
 };

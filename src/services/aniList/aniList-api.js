@@ -1,6 +1,7 @@
 import { fields } from './constants/fields';
 import { getYear, getNextSeason, getSeason } from '../../helpers/anime-utils';
 import { handleResponse } from '../../helpers/api-utils';
+
 const BASE_URL = 'https://graphql.anilist.co';
 
 // Helper function to fetch media array with given GraphQL query
@@ -24,7 +25,7 @@ export const getMediaArray = async query => {
   const pageInfo = data.data.Page.pageInfo;
   const mediaArray = data.data.Page.media;
 
-  // Throw error if no media found
+  // Throw error if request was successful but an empty media array is returned
   if (mediaArray.length === 0) {
     throw new Error('No results found. Please try again later');
   }
@@ -42,9 +43,7 @@ export const getPopularThisSeason = async () => {
           total
           perPage
         }
-        media(type: ANIME, season: ${season}, seasonYear: ${getYear(
-    season
-  )}, sort: POPULARITY_DESC, isAdult: false) {
+        media(type: ANIME, season: ${season}, seasonYear: ${new Date().getFullYear()}, sort: POPULARITY_DESC, isAdult: false) {
           ${fields}
         }
       }
@@ -84,39 +83,39 @@ export const getUpcoming = async () => {
   const year = getYear(season);
 
   const query = `
-      query ($page: Int, $perPage: Int) {
-        Page(page: $page, perPage: $perPage) {
-          pageInfo {
-            total
-            perPage
-          }
-          media(type: ANIME, status: NOT_YET_RELEASED, season: ${nextSeason}, seasonYear: ${year}, sort: POPULARITY_DESC, isAdult: false) {
-            ${fields}
-          }
+    query ($page: Int, $perPage: Int) {
+      Page(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          perPage
+        }
+        media(type: ANIME, status: NOT_YET_RELEASED, season: ${nextSeason}, seasonYear: ${year}, sort: POPULARITY_DESC, isAdult: false) {
+          ${fields}
         }
       }
-    `;
+    }
+  `;
 
   // Call getMediaArray with query and return media array
-  const { mediaArray } = await getMediaArray(query, { season, year });
+  const { mediaArray } = await getMediaArray(query);
   return mediaArray;
 };
 
 // Function to fetch popular anime
 export const getPopular = async () => {
   const query = `
-      query ($page: Int, $perPage: Int) {
-        Page(page: $page, perPage: $perPage) {
-          pageInfo {
-            total
-            perPage
-          }
-          media(type: ANIME, sort: POPULARITY_DESC, isAdult: false) {
-            ${fields}
-          }
+    query ($page: Int, $perPage: Int) {
+      Page(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          perPage
+        }
+        media(type: ANIME, sort: POPULARITY_DESC, isAdult: false) {
+          ${fields}
         }
       }
-    `;
+    }
+  `;
 
   const { mediaArray } = await getMediaArray(query);
   return mediaArray;
