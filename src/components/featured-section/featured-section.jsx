@@ -6,7 +6,7 @@ import SkeletonHeader from '../../components/skeleton-loaders/skeleton-header';
 import Card from '../card/card';
 import { manageAlert } from '../../helpers/alert-utils';
 import './featured-section.component.css';
-import SkeletonCard from '../skeleton-loaders/skeleton-card';
+import Skeleton from '../skeleton-loaders/skeleton';
 
 const FeaturedSection = props => {
   // Destructure props
@@ -36,15 +36,15 @@ const FeaturedSection = props => {
       return loading
         ? Array.from({ length: 20 }).map((_, index) => (
             <SplideSlide
-              className={`flex flex-col items-center skeleton-card splide__slide`}
+              className={`flex flex-col items-center skeleton overflow-hidden splide__slide`}
               key={index}
             >
-              <SkeletonCard featured={true} />
+              <Skeleton featured={true} />
             </SplideSlide>
           ))
         : data.map(anime => (
             <SplideSlide
-              className={`card relative w-[140px] md:w-[180px]`}
+              className={`card relative w-[150px] md:w-[180px]`}
               style={{
                 color: 'var(--main-text)',
                 '--main-color': anime.coverImage.color,

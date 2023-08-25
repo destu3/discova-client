@@ -1,5 +1,5 @@
 import Card from '../card/card';
-import SkeletonCard from '../skeleton-loaders/skeleton-card';
+import Skeleton from '../skeleton-loaders/skeleton';
 import './result-container.component.css';
 
 const ResultContainer = props => {
@@ -14,7 +14,7 @@ const ResultContainer = props => {
               className={`flex flex-col items-center w-full skeleton-card`}
               key={index}
             >
-              <SkeletonCard />
+              <Skeleton />
             </div>
           ))
         : /* Render data cards */
@@ -38,7 +38,7 @@ const ResultContainer = props => {
             className={`flex flex-col items-center w-full skeleton-card`}
             key={data.length + index} // Generate unique keys for skeleton cards
           >
-            <SkeletonCard />
+            <Skeleton />
           </div>
         ))}
     </section>

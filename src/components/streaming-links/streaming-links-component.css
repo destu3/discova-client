@@ -1,0 +1,25 @@
+.spotify-link:hover {
+  color: #1db954;
+}
+
+.youtube-link:hover {
+  color: #c01818;
+}
+
+.play-mv:hover {
+  color: var(--main-brand);
+}
+
+@media (hover: none) {
+  .spotify-link {
+    color: #1db954;
+  }
+
+  .youtube-link {
+    color: #c01818;
+  }
+
+  .play-mv {
+    color: var(--main-brand);
+  }
+}

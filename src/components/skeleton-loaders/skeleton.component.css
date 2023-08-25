@@ -1,5 +1,5 @@
-.skeleton-title::before,
-.skeleton-poster::before {
+.skeleton::before,
+.skeleton::before {
   z-index: 0;
   content: '';
   position: absolute;
@@ -15,11 +15,6 @@
   transform: translateX(-100%);
   animation: loading 2.5s infinite;
 }
-
-/* .search-results .skeleton-title::before,
-.search-results .skeleton-poster::before {
-  background: linear-gradient(to right, transparent, #4e4e55, transparent);
-} */
 
 @keyframes loading {
   100% {

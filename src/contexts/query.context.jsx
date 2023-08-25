@@ -25,5 +25,3 @@ export const QueryProvider = ({ children }) => {
     <QueryContext.Provider value={value}>{children}</QueryContext.Provider>
   );
 };
-
-export default QueryProvider;

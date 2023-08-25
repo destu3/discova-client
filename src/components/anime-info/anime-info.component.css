@@ -1,0 +1,14 @@
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px 20px;
+}
+
+/* md screens and upwards */
+@media screen and (min-width: 768px) {
+  .info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 35px;
+  }
+}

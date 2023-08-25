@@ -9,8 +9,11 @@ const Navbar = () => {
   const { currentUser } = useContext(UserContext);
 
   return (
-    <header className="w-full h-20 border-b-2 border-[var(--underline-grey)] border-solid">
-      <nav className="container mx-auto h-full flex items-center justify-between pr-[12px]">
+    <header
+      style={{ '--tw-bg-opacity': 0.5 }}
+      className="w-full bg-background relative z-50 h-20"
+    >
+      <nav className="sm:container mx-auto h-full flex items-center justify-between pr-[12px]">
         {/* Logo */}
         <NavLink
           className="flex items-center h-fit"

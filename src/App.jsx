@@ -4,25 +4,60 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
-import './App.css';
+import { lazy, Suspense } from 'react';
+import Loader from './components/loader/loader';
 
 // pages and layouts
 import Root from './layouts/root/root';
 import Home from './pages/home/home';
-import SearchWrapper from './layouts/search-wrapper/search-wrapper';
-import SignUp from './pages/auth/sign-up-form/sign-up-form';
-import LoginForm from './pages/auth/login-form/login-form';
-import CategorySearch from './pages/category-search/category-search';
+const SearchWrapper = lazy(() =>
+  import('./layouts/search-wrapper/search-wrapper')
+);
+const SignUp = lazy(() => import('./pages/auth/sign-up-form/sign-up-form'));
+const LoginForm = lazy(() => import('./pages/auth/login-form/login-form'));
+const CategorySearch = lazy(() =>
+  import('./pages/category-search/category-search')
+);
+const Anime = lazy(() => import('./pages/anime/anime'));
 
-// routes definitions and pages associated
+// routes definitions
 const routerConfig = createRoutesFromElements(
   <Route path="/" element={<Root />}>
     <Route index element={<Home />} />
-    <Route path="search" element={<SearchWrapper />}>
+    <Route
+      path="search"
+      element={
+        <Suspense fallback={<Loader />}>
+          <SearchWrapper />
+        </Suspense>
+      }
+    >
       <Route index element={<CategorySearch name="anime" />} />
     </Route>
-    <Route path="login" element={<LoginForm />} />
-    <Route path="sign-up" element={<SignUp />} />
+    <Route
+      path="login"
+      element={
+        <Suspense fallback={<Loader />}>
+          <LoginForm />
+        </Suspense>
+      }
+    />
+    <Route
+      path="sign-up"
+      element={
+        <Suspense fallback={<Loader />}>
+          <SignUp />
+        </Suspense>
+      }
+    />
+    <Route
+      path="anime/:slug/:id"
+      element={
+        <Suspense fallback={<Loader />}>
+          <Anime />
+        </Suspense>
+      }
+    />
   </Route>
 );
 

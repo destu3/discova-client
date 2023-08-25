@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AlertContext } from '../../../contexts/alert.context';
 import { manageAlert } from '../../../helpers/alert-utils';
@@ -20,6 +20,10 @@ const SignUpForm = () => {
   const [preview, setPreview] = useState('');
   const { email, username, fullName, password, confirmPassword } = fields;
   const { alert, setAlert } = useContext(AlertContext);
+
+  useEffect(() => {
+    document.title = 'Discova - Sign Up';
+  }, []);
 
   // Handle input change event
   const handleInputChange = e => {

@@ -1,9 +1,4 @@
-/**
- * Removes properties from an object, keeping only the specified properties.
- * @param {object} objRef - The object from which properties should be removed.
- * @param {...string} toRemain - The properties to keep in the object.
- * @returns {void}
- */
+// Removes properties from an object, keeping only the specified properties.
 export const removeProps = (objRef, ...toRemain) => {
   const keys = Object.keys(objRef);
 

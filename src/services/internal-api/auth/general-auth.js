@@ -1,8 +1,6 @@
 import { handleResponse } from '../../../helpers/api-utils';
-/**
- * Fetches the current user
- * @returns {Promise<Object>} A promise that resolves to the current user data.
- */
+
+// Fetches the current user
 export const getCurrentUser = async () => {
   try {
     const res = await fetch(`http://127.0.0.1:8000/api/current-user`, {

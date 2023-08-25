@@ -1,18 +1,47 @@
 import moment from 'moment/moment';
+import DOMPurify from 'dompurify';
+import slugify from 'slugify';
 
-/**
- * Retrieves the current year.
- * @returns {number} The current year.
- */
+// Retrieves the current year.
 export function getYear() {
+  const currentSeason = getSeason();
+
+  const year = new Date().getFullYear();
+
   // Get the current year
-  return new Date().getFullYear();
+  return currentSeason === 'WINTER' ? year + 1 : year;
 }
 
-/**
- * Retrieves the current season.
- * @returns {string} The current season in uppercase.
- */
+// determines the season and year based on a release date argument
+function getAnimeSeasonYear(releaseDate) {
+  // Extract year, month, and day from the input object
+  const year = releaseDate.year;
+  const month = releaseDate.month;
+
+  // Determine the anime season based on the month
+  let season;
+
+  if (month) {
+    if (1 <= month && month <= 3) {
+      season = 'Winter';
+    } else if (4 <= month && month <= 6) {
+      season = 'Spring';
+    } else if (7 <= month && month <= 9) {
+      season = 'Summer';
+    } else {
+      season = 'Fall';
+    }
+  }
+
+  // If the release date is before April, consider it as the previous year's Winter season
+  const seasonYear = month < 4 ? year - 1 : year;
+
+  if (!month) return year;
+
+  return season ? `${season} ${seasonYear}` : year;
+}
+
+// Retrieves the current season.
 export function getSeason() {
   // Get the current month and determine the season
   const date = new Date();
@@ -31,12 +60,10 @@ export function getSeason() {
   return season.toUpperCase();
 }
 
-/**
- * Retrieves the next season based on the current season.
- * @param {string} season - The current season.
- * @returns {string} The next season.
- */
-export function getNextSeason(season) {
+// Retrieves the next season based on the current season.
+export function getNextSeason() {
+  const season = getSeason();
+
   // Get the next season based on the current season
   if (season === 'WINTER') {
     return 'SPRING';
@@ -49,18 +76,17 @@ export function getNextSeason(season) {
   }
 }
 
-/**
- * Calculates the number of days until the next airing episode of an anime.
- * @param {Object} anime - The anime object.
- * @param {Object} anime.nextAiringEpisode - The next airing episode object.
- * @param {number} anime.nextAiringEpisode.airingAt - The Unix timestamp of the next airing episode.
- * @returns {string} The number of days until the next airing episode.
- */
-export const calculateDaysToAiring = ({ nextAiringEpisode }) => {
+// Calculates the number of days until the next airing episode of an anime.
+export const calculateDaysToAiring = anime => {
+  const { nextAiringEpisode } = anime;
   const currentDate = moment();
   const airingDateMs = nextAiringEpisode?.airingAt * 1000; // multiply unix timestamp by 1000 to get milliseconds
   const airingDate = moment(airingDateMs);
   const episode = nextAiringEpisode?.episode;
+
+  if (!nextAiringEpisode) {
+    return showAiringInfo(anime);
+  }
 
   // Calculate the difference between the dates
   const duration = moment.duration(airingDate.diff(currentDate));
@@ -70,30 +96,41 @@ export const calculateDaysToAiring = ({ nextAiringEpisode }) => {
     const daysDiff = Math.floor(duration.asDays());
     if (daysDiff > 30) {
       const formattedDate = airingDate.format('Do MMM YYYY');
-      return `Episode ${episode} airing ${formattedDate}`;
+      return `Ep ${episode} airing ${formattedDate}`;
     }
-    return `Episode ${episode} airing in ${daysDiff} day${
-      daysDiff > 1 ? 's' : ''
-    }`;
+    return `Ep ${episode} airing in ${daysDiff} day${daysDiff > 1 ? 's' : ''}`;
   } else if (duration.asHours() >= 1) {
     const hoursDiff = Math.floor(duration.asHours());
-    const minutesDiff = Math.floor(duration.asMinutes()) % 60;
-    return `Episode ${episode} airing in ${hoursDiff} hour${
+    return `Ep ${episode} airing in ${hoursDiff} hour${
       hoursDiff > 1 ? 's' : ''
-    } and ${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
+    }`;
   } else {
     const minutesDiff = Math.floor(duration.asMinutes());
-    const secondsDiff = Math.floor(duration.asSeconds()) % 60;
-    return `Episode ${episode} airing in ${minutesDiff} minute${
+    return `Ep ${episode} airing in ${minutesDiff} min${
       minutesDiff !== 1 ? 's' : ''
-    } and ${secondsDiff} second${secondsDiff !== 1 ? 's' : ''}`;
+    }`;
   }
 };
 
+// returns the airing information of an anime
 export const showAiringInfo = anime => {
   const { season, seasonYear, episodes } = anime;
 
-  if (!season || !seasonYear) return 'Coming Soon';
+  if (!anime.startDate) {
+    return 'Coming Soon';
+  }
+
+  if (!season || !seasonYear) {
+    if (Object.values(anime.startDate).every(value => value !== null))
+      return `${getAnimeSeasonYear(anime.startDate)} • ${
+        anime.episodes && anime.episodes
+      } Eps`;
+    else if (anime.startDate.year) {
+      return anime.startDate.year;
+    } else {
+      return 'Coming Soon';
+    }
+  }
 
   if (anime.nextAiringEpisode?.airingAt) {
     return calculateDaysToAiring(anime);
@@ -102,6 +139,38 @@ export const showAiringInfo = anime => {
   const capitalized = season?.charAt(0) + season?.slice(1).toLowerCase();
 
   return `${capitalized} ${seasonYear} ${
-    episodes ? `• ${episodes} ${episodes > 1 ? 'Episodes' : 'Episode'}` : ''
+    episodes ? `• ${episodes} ${episodes > 1 ? 'Eps' : 'Ep'}` : ''
   }`;
+};
+
+// generates a url for an anime resource
+export const generateUrl = anime => {
+  const title = anime.title.english || anime.title.romaji || anime.title.native;
+
+  // Generating a URL-friendly slug for the anime title.
+  const slug = slugify(title, {
+    lower: true,
+    remove: /[$*_+~.()'"!:;@/?]/g,
+  });
+
+  return `/anime/${slug}/${anime.id}`;
+};
+
+// sanitizes html text
+export const sanitize = anime => {
+  return {
+    __html: DOMPurify.sanitize(anime.description),
+  };
+};
+
+export const capitalizeWords = str =>
+  str
+    .toLowerCase()
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+export const parseThemeSlug = slug => {
+  const type = slug.startsWith('OP') ? 'OP' : 'ED';
+  return `${type} ${slug.slice(2).replace('-', ' ')}`;
 };

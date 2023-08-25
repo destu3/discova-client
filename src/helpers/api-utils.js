@@ -1,9 +1,4 @@
-/**
- * Parses the response and returns data if response is ok. Throws an error with a generic error message or a specific message from the server if response is not ok.
- * @param {Response} response - The response object.
- * @returns {Promise<Object>} A promise that resolves to the parsed response data.
- * @throws {Error} If the response is not successful or an error message is present in the response data.
- */
+// Parses the response and returns data if response is ok. Throws an error with a generic error message or a specific message from the server if response is not ok.
 export const handleResponse = async response => {
   const result = await response.json();
 

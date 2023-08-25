@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 
+// create AlertContext
 export const AlertContext = createContext();
 
 export const AlertProvider = ({ children }) => {
@@ -13,5 +14,3 @@ export const AlertProvider = ({ children }) => {
     <AlertContext.Provider value={value}>{children}</AlertContext.Provider>
   );
 };
-
-export default AlertProvider;

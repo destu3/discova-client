@@ -1,4 +1,4 @@
-import { fields } from './constants/fields';
+import fields from './graphql/fields';
 import { getYear, getNextSeason, getSeason } from '../../helpers/anime-utils';
 import { handleResponse } from '../../helpers/api-utils';
 
@@ -43,7 +43,7 @@ export const getPopularThisSeason = async () => {
           total
           perPage
         }
-        media(type: ANIME, season: ${season}, seasonYear: ${new Date().getFullYear()}, sort: POPULARITY_DESC, isAdult: false) {
+        media(type: ANIME, season: ${season}, seasonYear: ${getYear()}, sort: POPULARITY_DESC, isAdult: false) {
           ${fields}
         }
       }
@@ -78,9 +78,8 @@ export const getTrending = async () => {
 
 // Function to fetch upcoming anime for next season
 export const getUpcoming = async () => {
-  const season = getSeason();
-  const nextSeason = getNextSeason(season);
-  const year = getYear(season);
+  const nextSeason = getNextSeason();
+  const year = getYear();
 
   const query = `
     query ($page: Int, $perPage: Int) {

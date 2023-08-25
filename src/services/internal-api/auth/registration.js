@@ -1,13 +1,7 @@
 import { removeProps } from '../../../helpers/object-utils';
 import { handleResponse } from '../../../helpers/api-utils';
 
-/**
- * Registers a new user by making an API call to the sign-up endpoint and handling the response.
- * @param {object} payload - The user data to be sent in the API request.
- * @param {Function} setAlert - The callback function to display an alert message.
- * @param {object} alertOptions - The options for the alert message.
- * @returns {Promise<void>} A Promise that resolves when the registration process is complete.
- */
+// Registers a new user by making an API call to the sign-up endpoint and handling the response.
 export const register = async (payload, setAlert, alertOptions) => {
   // const formData = toFormData(payload);
 

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import FeaturedSection from '../../components/featured-section/featured-section';
 import {
   getTrending,
@@ -5,23 +6,36 @@ import {
   getPopularThisSeason,
   getUpcoming,
 } from '../../services/aniList/aniList-api';
+import {
+  getYear,
+  getSeason,
+  capitalizeWords,
+  getNextSeason,
+} from '../../helpers/anime-utils';
 import '@splidejs/react-splide/css';
 
 const Home = () => {
+  const season = capitalizeWords(getSeason(getYear));
+  const nextSeason = capitalizeWords(getNextSeason());
+  const year = getYear();
+
+  useEffect(() => {
+    document.title = 'Discova - Home';
+  }, []);
   return (
     <>
       {/* Featured Header Section */}
       <FeaturedSection
-        className="featured-header h-[220px] md:h-[350px] w-full"
+        className="featured-header h-[250px] md:h-[350px] w-full"
         options={{
-          speed: 1500,
+          speed: 500,
           type: 'loop',
           autoplay: true,
           drag: true,
           snap: true,
           waitForTransition: true,
           pagination: false,
-          interval: 7500,
+          interval: 10000,
           perPage: 1,
           pauseOnFocus: true,
         }}
@@ -36,7 +50,7 @@ const Home = () => {
           className="featured-sect results-container w-full featured-sect splide"
           dataFetcher={getTrending}
           ariaLabel="Trending Section"
-          title="Trending"
+          title="Currently Trending"
         />
 
         {/* Seasons trending section */}
@@ -44,7 +58,7 @@ const Home = () => {
           className="featured-sect results-container w-full featured-sect splide"
           dataFetcher={getPopularThisSeason}
           ariaLabel="Seasons trending section"
-          title="Popular this Season"
+          title={`Popular this Season - ${season} ${year}`}
         />
 
         {/* Upcoming Section */}
@@ -52,7 +66,7 @@ const Home = () => {
           className="featured-sect results-container w-full featured-sect splide"
           dataFetcher={getUpcoming}
           ariaLabel="Upcoming Section"
-          title="Coming Next Season"
+          title={`Coming next Season - ${nextSeason} ${year} `}
         />
 
         {/* Popular Section */}

@@ -11,14 +11,6 @@
   --underline-grey: #1c1b1a;
 }
 
-body {
-  min-height: 100vh;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* .primary-btn {
-  @apply text-gray-100 bg-[#292927] hover:bg-zinc-700 p-2 px-4 rounded-lg  transition-all;
-} */

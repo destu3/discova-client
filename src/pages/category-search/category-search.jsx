@@ -14,6 +14,7 @@ const { Search } = Input;
 // Component that handles searching and displaying various categories of content
 const CategorySearch = ({ name }) => {
   const [data, setData] = useState([]);
+  const [noMoreData, setNoMoreData] = useState(false);
   const [loading, setLoading] = useState(true);
   const [moreLoading, setMoreLoading] = useState(false);
   const [debounceId, setDebounceId] = useState(null);
@@ -22,6 +23,7 @@ const CategorySearch = ({ name }) => {
 
   // Handle input change event
   const handleChange = async (e, _newQuery) => {
+    setNoMoreData(false);
     const value = e ? e.target.value : query.search;
 
     clearTimeout(debounceId);
@@ -72,26 +74,28 @@ const CategorySearch = ({ name }) => {
 
   // Handle load more action
   const handleLoadMore = async () => {
-    if (
-      document.documentElement.scrollTop +
-        document.documentElement.clientHeight ===
-      document.documentElement.scrollHeight
-    ) {
-      const newQuery = { ...query, page: ++query.page };
+    if (noMoreData === false)
+      if (
+        document.documentElement.scrollTop +
+          document.documentElement.clientHeight ===
+        document.documentElement.scrollHeight
+      ) {
+        const newQuery = { ...query, page: ++query.page };
 
-      setQuery(newQuery);
-      setMoreLoading(true);
-      try {
-        const results = await search(newQuery);
-        const mediaArray = handleDuplicates(data, results.mediaArray);
-        const appended = [...data, ...mediaArray];
-        setData(appended);
-        setMoreLoading(false);
-      } catch (err) {
-        manageAlert(err, alert, setAlert);
-        setMoreLoading(false);
+        setQuery(newQuery);
+        setMoreLoading(true);
+        try {
+          const results = await search(newQuery);
+          const mediaArray = handleDuplicates(data, results.mediaArray);
+          const appended = [...data, ...mediaArray];
+          setData(appended);
+          setMoreLoading(false);
+        } catch (err) {
+          manageAlert(err, alert, setAlert);
+          setNoMoreData(true);
+          setMoreLoading(false);
+        }
       }
-    }
   };
 
   useEffect(() => {
@@ -105,7 +109,7 @@ const CategorySearch = ({ name }) => {
     return () => {
       document.removeEventListener('scroll', handleLoadMore);
     };
-  }, [data]);
+  }, [data, noMoreData]);
 
   return (
     <div className="relative p-2" aria-label={`content-type-${name}`}>
@@ -119,7 +123,7 @@ const CategorySearch = ({ name }) => {
         />
 
         {/* Render the filter options for small screens */}
-        <div className="sm-filter-section lg:hidden w-full max-w-[600px] mt-2 p-1">
+        <div className="sm-filter-section lg:!hidden w-full max-w-[600px] mt-2 p-1">
           <FilterOption
             changeHandler={handleChange}
             initVisibility={false}

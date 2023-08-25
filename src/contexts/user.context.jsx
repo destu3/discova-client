@@ -20,5 +20,3 @@ export const UserProvider = ({ children }) => {
   // Render the context provider with the provided children
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
-
-export default UserProvider;
