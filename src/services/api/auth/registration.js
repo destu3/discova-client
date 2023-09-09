@@ -10,6 +10,7 @@ export const register = async payload => {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
     body: JSON.stringify(payload),
   });
@@ -29,6 +30,7 @@ export const register = async payload => {
 
   // Store the user data in the local storage to persist the user session
   localStorage.setItem('currentUser', JSON.stringify(data.user));
+  localStorage.setItem('token', data.token);
 
   return data.user;
 };

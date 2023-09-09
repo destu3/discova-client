@@ -13,6 +13,7 @@ export const addEntryToList = async (animeId, listType) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({ listType }),
       withCredentials: true,
@@ -32,6 +33,7 @@ export const removeAnimeFromList = async (animeId, listType) => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({ listType }),
       withCredentials: true,

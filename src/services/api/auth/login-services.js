@@ -10,6 +10,7 @@ export const login = async (email, password) => {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
     body: JSON.stringify({ email, password }),
   });
@@ -27,8 +28,9 @@ export const login = async (email, password) => {
     'favourites'
   );
 
-  // Store the user data in the local storage to persist the user session
+  // Store the user data and token in the local storage to persist the user session
   localStorage.setItem('currentUser', JSON.stringify(data.user));
+  localStorage.setItem('token', data.token);
 
   return data.user;
 };

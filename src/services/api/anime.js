@@ -1,4 +1,4 @@
-import { handleResponse } from '../../utils/api-utils';
+import { handleResponse, getFeaturedContent } from '../../utils/api-utils';
 
 // Performs a search based on the given query parameters.
 export const search = async query => {
@@ -45,13 +45,12 @@ export const getWatchlistAnime = async () => {
     {
       withCredentials: true, // Enable sending cookies
       credentials: 'include', // Include cookies in the request
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     }
   );
   const data = await handleResponse(res);
   return data;
 };
-
-import { getFeaturedContent } from '../../utils/api-utils';
 
 // Function to fetch popular anime for current season
 export const getPopularThisSeason = () => {

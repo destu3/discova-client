@@ -8,6 +8,7 @@ export const getCurrentUser = async () => {
       {
         withCredentials: true, // Enable sending cookies
         credentials: 'include', // Include cookies in the request
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       }
     );
     const data = await handleResponse(res);
