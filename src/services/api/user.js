@@ -7,15 +7,18 @@ const updateLocalStorage = (updatedList, listType) => {
 };
 
 export const addEntryToList = async (animeId, listType) => {
-  const res = await fetch(`http://127.0.0.1:8000/api/user/list/${animeId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ listType }),
-    withCredentials: true,
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `https://discova-server.onrender.com/api/user/list/${animeId}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ listType }),
+      withCredentials: true,
+      credentials: 'include',
+    }
+  );
   const { updatedList } = await handleResponse(res);
   updateLocalStorage(updatedList, listType);
 
@@ -23,15 +26,18 @@ export const addEntryToList = async (animeId, listType) => {
 };
 
 export const removeAnimeFromList = async (animeId, listType) => {
-  const res = await fetch(`http://127.0.0.1:8000/api/user/list/${animeId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ listType }),
-    withCredentials: true,
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `https://discova-server.onrender.com/api/user/list/${animeId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ listType }),
+      withCredentials: true,
+      credentials: 'include',
+    }
+  );
   const { updatedList } = await handleResponse(res);
   updateLocalStorage(updatedList, listType);
 

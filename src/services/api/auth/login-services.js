@@ -4,7 +4,7 @@ import { handleResponse } from '../../../utils/api-utils';
 // Logs in a user using the specified email and password by making an API call.
 export const login = async (email, password) => {
   // Make an API call to the login endpoint
-  const res = await fetch('http://127.0.0.1:8000/api/login', {
+  const res = await fetch('https://discova-server.onrender.com/api/login', {
     method: 'POST',
     withCredentials: true,
     credentials: 'include',

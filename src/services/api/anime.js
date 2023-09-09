@@ -14,7 +14,7 @@ export const search = async query => {
 
   if (query.year) params += `&seasonYear=${query.year}`;
 
-  const endpoint = `http://127.0.0.1:8000/api/anime/search?${params}`;
+  const endpoint = `https://discova-server.onrender.com/api/anime/search?${params}`;
 
   const res = await fetch(endpoint);
   const data = await handleResponse(res);
@@ -23,23 +23,30 @@ export const search = async query => {
 
 // retrieves information about an anime
 export const getAnimeInfo = async id => {
-  const res = await fetch(`http://127.0.0.1:8000/api/anime/${id}`);
+  const res = await fetch(
+    `https://discova-server.onrender.com/api/anime/${id}`
+  );
   const data = await handleResponse(res);
   return data;
 };
 
 // retrieves theme data for an anime
 export const getThemes = async id => {
-  const res = await fetch(`http://127.0.0.1:8000/api/anime/themes/${id}`);
+  const res = await fetch(
+    `https://discova-server.onrender.com/api/anime/themes/${id}`
+  );
   const data = await handleResponse(res);
   return data;
 };
 
 export const getWatchlistAnime = async () => {
-  const res = await fetch(`http://127.0.0.1:8000/api/anime/details-by-ids`, {
-    withCredentials: true, // Enable sending cookies
-    credentials: 'include', // Include cookies in the request
-  });
+  const res = await fetch(
+    `https://discova-server.onrender.com/api/anime/details-by-ids`,
+    {
+      withCredentials: true, // Enable sending cookies
+      credentials: 'include', // Include cookies in the request
+    }
+  );
   const data = await handleResponse(res);
   return data;
 };
@@ -49,7 +56,7 @@ import { getFeaturedContent } from '../../utils/api-utils';
 // Function to fetch popular anime for current season
 export const getPopularThisSeason = () => {
   const mediaArray = getFeaturedContent(
-    `http://127.0.0.1:8000/api/anime/featured/popular-this-season`
+    `https://discova-server.onrender.com/api/anime/featured/popular-this-season`
   );
 
   return mediaArray;
@@ -58,7 +65,7 @@ export const getPopularThisSeason = () => {
 // Function to fetch trending anime
 export const getTrending = () => {
   const mediaArray = getFeaturedContent(
-    `http://127.0.0.1:8000/api/anime/featured/trending`
+    `https://discova-server.onrender.com/api/anime/featured/trending`
   );
   return mediaArray;
 };
@@ -66,7 +73,7 @@ export const getTrending = () => {
 // Function to fetch upcoming anime for next season
 export const getUpcoming = () => {
   const mediaArray = getFeaturedContent(
-    `http://127.0.0.1:8000/api/anime/featured/upcoming`
+    `https://discova-server.onrender.com/api/anime/featured/upcoming`
   );
   return mediaArray;
 };
@@ -74,7 +81,7 @@ export const getUpcoming = () => {
 // Function to fetch popular anime
 export const getPopular = () => {
   const mediaArray = getFeaturedContent(
-    `http://127.0.0.1:8000/api/anime/featured/popular`
+    `https://discova-server.onrender.com/api/anime/featured/popular`
   );
   return mediaArray;
 };

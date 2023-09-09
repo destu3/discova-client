@@ -4,7 +4,7 @@ import { handleResponse } from '../../../utils/api-utils';
 // Registers a new user by making an API call to the sign-up endpoint and handling the response.
 export const register = async payload => {
   // Make an API call to the sign up endpoint
-  const res = await fetch('http://127.0.0.1:8000/api/sign-up', {
+  const res = await fetch('https://discova-server.onrender.com/api/sign-up', {
     method: 'POST',
     withCredentials: true,
     credentials: 'include',
