@@ -1,14 +1,12 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
-import { UserContext } from '../../contexts/user.context';
 import MainContent from '../../components/main-content/main-content';
 import Loader from '../../components/loader/loader';
 
-import { getAnimeInfo } from '../../services/internal-api/anime';
+import { getAnimeInfo } from '../../services/api/anime';
 
 const Anime = () => {
-  const user = useContext(UserContext);
   const { pathname } = useLocation();
   const { id } = useParams();
   const [animeInfo, setAnimeInfo] = useState(null);

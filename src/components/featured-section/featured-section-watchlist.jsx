@@ -1,14 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
-import HeaderCard from '../../components/header-card/header-card';
-import SkeletonHeader from '../../components/skeleton-loaders/skeleton-header';
+import HeaderCard from '../header-card/header-card';
+import SkeletonHeader from '../skeleton-loaders/skeleton-header';
 import Card from '../card/card';
+import { UserContext } from '../../contexts/user.context';
 import { AlertContext } from '../../contexts/alert.context';
 import { showAlert } from '../../utils/alert-utils';
 import './featured-section.component.css';
 import Skeleton from '../skeleton-loaders/skeleton';
 
-const FeaturedSection = props => {
+const FeaturedSectionWatchlist = props => {
   // Destructure props
   const { dataFetcher, className, options, ariaLabel, featuredHeader, title } =
     props;
@@ -16,7 +17,7 @@ const FeaturedSection = props => {
   // State for loading and data
   const [state, setState] = useState({ loading: true, data: [] });
   const { loading, data } = state;
-
+  const { currentUser } = useContext(UserContext);
   const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const FeaturedSection = props => {
         showAlert(err.message, setAlert, true);
       }
     })();
-  }, []);
+  }, [currentUser]);
 
   // Determine what to render based on the featuredHeader and loading values
   const determineRender = () => {
@@ -114,4 +115,4 @@ const FeaturedSection = props => {
   );
 };
 
-export default FeaturedSection;
+export default FeaturedSectionWatchlist;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
 import ThemeCard from '../theme-card/theme-card';
-import { getThemes } from '../../services/internal-api/anime';
+import { getThemes } from '../../services/api/anime';
 
 const ThemeSection = () => {
   const [themes, setThemes] = useState(null);
@@ -22,18 +22,30 @@ const ThemeSection = () => {
       {themes ? (
         <>
           <section className="themes">
-            <h3 className="font-semibold text-[1.15rem] md:text-[1.3rem] mb-3">
-              Openings and Endings
-            </h3>
+            <div className="openings mb-5">
+              <h3 className="font-semibold text-[1.15rem] md:text-[1.2rem] mb-3">
+                Openings
+              </h3>
+              <div className="theme-cards flex flex-col gap-2">
+                {themes.ops.map(theme => (
+                  <ThemeCard theme={theme} key={theme.songId + theme.slug} />
+                ))}
+              </div>
+            </div>
 
-            <div className="theme-cards flex flex-col gap-2">
-              {themes.map(theme => (
-                <ThemeCard theme={theme} key={theme.songId + theme.slug} />
-              ))}
+            <div className="endings mb-5">
+              <h3 className="font-semibold text-[1.15rem] md:text-[1.2rem] mb-3">
+                Endings
+              </h3>
+              <div className="theme-cards flex flex-col gap-2">
+                {themes.eds.map(theme => (
+                  <ThemeCard theme={theme} key={theme.songId + theme.slug} />
+                ))}
+              </div>
             </div>
           </section>
         </>
-      ) : themes !== undefined ? (
+      ) : themes === null ? (
         <div className="my-14 flex flex-col gap-4 items-center">
           <HashLoader size={50} color="#bb86fc" />
         </div>

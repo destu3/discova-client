@@ -1,0 +1,20 @@
+.card:hover .card-btn {
+  opacity: 1;
+}
+
+.card-btn {
+  opacity: 0;
+  background: rgba(243, 242, 242, 0.8);
+  box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px;
+}
+
+.card-btn:hover {
+  background: rgba(243, 242, 242, 1);
+}
+
+/* Style for non-hoverable devices */
+@media (hover: none) {
+  .card-btn {
+    opacity: 1;
+  }
+}

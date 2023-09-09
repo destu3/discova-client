@@ -1,11 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AlertContext } from '../../../contexts/alert.context';
-import { manageAlert } from '../../../helpers/alert-utils';
+import { showAlert } from '../../../utils/alert-utils';
+import { redirectHome } from '../../../utils/auth-utils';
 import FormInput from '../../../components/form-input/form-input';
+import '../auth.css';
 
 // Services
-import { register } from '../../../services/internal-api/auth/registration';
+import { register } from '../../../services/api/auth/registration';
 
 const defaultFields = {
   email: '',
@@ -19,7 +21,7 @@ const SignUpForm = () => {
   const [fields, setFields] = useState(defaultFields);
   const [preview, setPreview] = useState('');
   const { email, username, fullName, password, confirmPassword } = fields;
-  const { alert, setAlert } = useContext(AlertContext);
+  const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     document.title = 'Discova - Sign Up';
@@ -35,13 +37,12 @@ const SignUpForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await register({ ...fields }, setAlert, {
-        ...alert,
-        type: 'success',
-        visible: true,
-      });
+      // const { username } = await register({ ...fields });
+      const { username } = await register(fields);
+      showAlert(`Welcome to Discova ${username}`, setAlert);
+      redirectHome(2000);
     } catch (err) {
-      manageAlert(err, alert, setAlert);
+      showAlert(err.message, setAlert, true);
     }
   };
 

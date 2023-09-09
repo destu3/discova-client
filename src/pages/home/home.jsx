@@ -1,23 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import FeaturedSection from '../../components/featured-section/featured-section';
+import FeaturedSectionWatchlist from '../../components/featured-section/featured-section-watchlist';
+import { UserContext } from '../../contexts/user.context';
 import {
   getTrending,
   getPopular,
   getPopularThisSeason,
   getUpcoming,
-} from '../../services/aniList/aniList-api';
+} from '../../services/api/anime';
 import {
   getYear,
   getSeason,
   capitalizeWords,
   getNextSeason,
-} from '../../helpers/anime-utils';
+} from '../../utils/anime-utils';
+import { getWatchlistAnime } from '../../services/api/anime';
 import '@splidejs/react-splide/css';
 
 const Home = () => {
   const season = capitalizeWords(getSeason(getYear));
   const nextSeason = capitalizeWords(getNextSeason());
   const year = getYear();
+
+  const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
     document.title = 'Discova - Home';
@@ -42,9 +47,20 @@ const Home = () => {
         dataFetcher={getPopularThisSeason}
         ariaLabel="Featured Header Section"
         featuredHeader={true}
+        list={true}
       />
 
       <main className="w-11/12 mt-10 sm:mt-20 mx-auto px-2 pb-5">
+        {/* List */}
+        {currentUser?.watchList.length > 0 && (
+          <FeaturedSectionWatchlist
+            className="featured-sect results-container w-full featured-sect splide"
+            dataFetcher={getWatchlistAnime}
+            ariaLabel="User watchlist"
+            title="My List"
+          />
+        )}
+
         {/* Trending Section */}
         <FeaturedSection
           className="featured-sect results-container w-full featured-sect splide"
@@ -66,7 +82,7 @@ const Home = () => {
           className="featured-sect results-container w-full featured-sect splide"
           dataFetcher={getUpcoming}
           ariaLabel="Upcoming Section"
-          title={`Coming next Season - ${nextSeason} ${year} `}
+          title={`Coming next Season - ${nextSeason} ${year}`}
         />
 
         {/* Popular Section */}

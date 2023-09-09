@@ -1,14 +1,15 @@
 import { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AlertContext } from '../../../contexts/alert.context';
-import { manageAlert } from '../../../helpers/alert-utils';
+import { showAlert } from '../../../utils/alert-utils';
+import { redirectHome } from '../../../utils/auth-utils';
 import '../auth.css';
 
 // Components
 import FormInput from '../../../components/form-input/form-input';
 
 // Services
-import { login } from '../../../services/internal-api/auth/login-services';
+import { login } from '../../../services/api/auth/login-services';
 
 const defaultFields = {
   email: '',
@@ -18,7 +19,7 @@ const defaultFields = {
 const LoginForm = () => {
   const [fields, setFields] = useState(defaultFields);
   const { email, password } = fields;
-  const { alert, setAlert } = useContext(AlertContext);
+  const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     document.title = 'Discova - Login';
@@ -34,13 +35,11 @@ const LoginForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await login(email, password, setAlert, {
-        ...alert,
-        type: 'success',
-        visible: true,
-      });
+      const { username } = await login(email, password);
+      showAlert(`Welcome back ${username}`, setAlert);
+      redirectHome(2000);
     } catch (err) {
-      manageAlert(err, alert, setAlert);
+      showAlert(err.message, setAlert, true);
     }
   };
 

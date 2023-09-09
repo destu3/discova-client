@@ -1,5 +1,5 @@
 import StreamingLinks from '../streaming-links/streaming-links';
-import { parseThemeSlug } from '../../helpers/anime-utils';
+import { parseThemeSlug } from '../../utils/anime-utils';
 
 const ThemeCard = ({ theme }) => {
   const { songTitle, artists } = theme;

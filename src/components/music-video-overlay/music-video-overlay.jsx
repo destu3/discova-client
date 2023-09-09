@@ -52,6 +52,16 @@ const MusicVideoOverlay = () => {
     }
   };
 
+  const playVideo = () => {
+    if (video.sameSong) {
+      const { current } = videoRef;
+      const seekPos = Math.round(video.prevCurrentTime);
+      current.currentTime = seekPos;
+      current.play();
+    }
+    setOverlayVisible(true);
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', closeOverlay);
 
@@ -81,19 +91,11 @@ const MusicVideoOverlay = () => {
         </header>
         <animated.video
           ref={videoRef}
-          onLoadedData={() => {
-            if (video.sameSong) {
-              const { current } = videoRef;
-              const seekPos = Math.round(video.prevCurrentTime);
-              current.currentTime = seekPos;
-              current.play();
-            }
-            setOverlayVisible(true);
-          }}
+          onLoadedData={playVideo}
           autoPlay
           loop
           style={videoProps}
-          className="rounded-md w-full aspect-video outline-none music-video"
+          className="rounded-md aspect-video w-full outline-none music-video"
           src={video.link}
           controls
         />

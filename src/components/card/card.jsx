@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from '../skeleton-loaders/skeleton';
+import ActionButtons from '../action-buttons/action-buttons';
 import {
   generateUrl,
   calculateDaysToAiring,
   showAiringInfo,
-} from '../../helpers/anime-utils';
+} from '../../utils/anime-utils';
 import './card.component.css';
 
 const Card = ({ anime }) => {
@@ -57,6 +58,9 @@ const Card = ({ anime }) => {
           {airingInfo}
         </p>
       </div>
+
+      {/* use the current user state to determine which action buttons will be rendered */}
+      <ActionButtons animeId={anime.id} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { generateUrl, capitalizeWords } from '../../helpers/anime-utils';
+import { generateUrl, capitalizeWords } from '../../utils/anime-utils';
 
 const RelationCard = ({ relation, cardType }) => {
   let title, relationType, type, status;
@@ -39,7 +39,7 @@ const RelationCard = ({ relation, cardType }) => {
       <div className="py-3">
         <div
           title={title}
-          className="title text-[var(--main-text)] text-[0.9rem]"
+          className="title text-[var(--main-text)] leading-5 text-[0.9rem] pb-[2px]"
         >
           {title}
         </div>
@@ -67,7 +67,7 @@ const RelationCard = ({ relation, cardType }) => {
       <div className="py-3">
         <div
           title={relation.node.name.full}
-          className="char-name text-[var(--main-text)] text-[0.9rem]"
+          className="char-name text-[var(--main-text)] leading-5 pb-[1px] text-[0.9rem]"
         >
           {relation.node.name.full}
         </div>

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { capitalizeWords } from '../../helpers/anime-utils';
+import { capitalizeWords } from '../../utils/anime-utils';
 import './anime-info.component.css';
 
 const AnimeInfo = ({ animeInfo }) => {

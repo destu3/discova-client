@@ -26,15 +26,12 @@
   position: absolute;
 }
 
-.card:hover .card-overlay {
-  transform: translateY(0);
+.card .wrapper {
+  transform-origin: left center;
 }
 
-/* Style for non-hoverable devices */
-@media (hover: none) {
-  .card-overlay {
-    transform: translateY(0);
-  }
+.card:hover .card-overlay {
+  transform: translateY(0);
 }
 
 .img-skeleton::before {
@@ -46,4 +43,11 @@
   bottom: 0;
   opacity: 0.05;
   position: absolute;
+}
+
+/* Style for non-hoverable devices */
+@media (hover: none) {
+  .card-overlay {
+    transform: translateY(0);
+  }
 }

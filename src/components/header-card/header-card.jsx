@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { generateUrl, sanitize } from '../../helpers/anime-utils';
+import { generateUrl, sanitize } from '../../utils/anime-utils';
 import './header-card.component.css';
 
 const HeaderCard = ({ anime }) => {

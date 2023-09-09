@@ -1,24 +1,23 @@
-# Project Brief: Discova - Anime Discovery and Tracking Application
+# Discova - Anime Discovery and Tracking Application
 
 ## Introduction:
 
-Discova aims to provide anime enthusiasts with a comprehensive platform for discovering, tracking, reviewing, and rating their favorite shows. It serves as the ultimate destination for all anime-related activities.
+Discova aims to provide anime enthusiasts with a comprehensive platform for discovering, tracking and reviewing their favorite shows. It serves as the ultimate destination for anime-related activities.
 
-## Objectives:
+## Main Objectives:
 
-- Empower users to effortlessly explore new anime titles.
+- Empower users to effortlessly explore anime titles.
 - Provide users with in-depth information on each anime, including plot, genre, opening and ending themes, release date, and more.
-- Enable users to seamlessly track their progress while watching anime.
-- Facilitate user-generated ratings and reviews for the animes they have watched.
+- Enable users to keep track of the anime they want to watch and their favorite shows.
+- Facilitate user reviews for the animes they have watched.
 
 ## Functional Requirements:
 
 - User registration and login: Streamlined user registration and login processes for accessing the application.
-- Anime Discovery: Personalized anime recommendations based on users' preferences and interests.
-- Anime Information: Comprehensive and detailed anime information, encompassing plot summaries, genres, release dates, and more.
-- Watch List: Convenient functionality for adding animes to a watch list and monitoring progress.
-- Tracking: Effortless tracking of watched animes and episodes viewed.
-- Rating and Review: User-friendly interfaces for rating and providing reviews for the animes users have watched.
+- Anime Discovery: Discover all kinds of titles from searching, featured content, recommendations and more.
+- Anime Information: Comprehensive and detailed anime information, encompassing plot summaries, genres, release dates, themes and more.
+- Tracking: Convenient functionality for adding animes to a watch list and favorites.
+- Reviews: User-friendly interfaces for providing users the ability to review the animes that they have watched.
 
 ## Non-Functional Requirements:
 
@@ -30,4 +29,4 @@ Discova aims to provide anime enthusiasts with a comprehensive platform for disc
 
 ## Conclusion:
 
-Discova, the Anime Discovery and Tracking Application, offers anime enthusiasts a comprehensive and user-friendly platform for all their anime-related activities. With its focus on user experience, performance, security, scalability, and maintainability, Discova enables users to effortlessly explore new anime, keep track of their progress, and share their valuable opinions.
+Discova, the Anime Discovery and Tracking Application, offers anime enthusiasts a comprehensive and user-friendly platform for all their anime-related activities. With its focus on user experience, performance, security, scalability, and maintainability.

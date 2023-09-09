@@ -13,3 +13,10 @@ export const handleResponse = async response => {
 
   throw new Error(errorMessage);
 };
+
+// helper function that retrieves featured anime content
+export const getFeaturedContent = async url => {
+  const res = await fetch(url);
+  const mediaArray = handleResponse(res);
+  return mediaArray;
+};

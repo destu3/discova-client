@@ -1,6 +1,6 @@
 import RelationCard from '../relation-card/relation-card';
 import AnimeInfo from '../anime-info/anime-info';
-import { sanitize } from '../../helpers/anime-utils';
+import { sanitize } from '../../utils/anime-utils';
 import './anime-overview.component.css';
 
 const AnimeOverview = ({ animeInfo }) => {

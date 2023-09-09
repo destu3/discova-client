@@ -2,10 +2,7 @@ import { Tabs } from 'antd';
 import Card from '../card/card';
 import AnimeOverview from '../anime-overview/anime-overview';
 import ThemeSection from '../theme-section/theme-section';
-import {
-  calculateDaysToAiring,
-  showAiringInfo,
-} from '../../helpers/anime-utils';
+import { calculateDaysToAiring, showAiringInfo } from '../../utils/anime-utils';
 import './main-content.component.css';
 
 const MainContent = ({ animeInfo }) => {

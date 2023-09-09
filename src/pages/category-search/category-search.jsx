@@ -1,11 +1,11 @@
 import { useState, useContext, useEffect } from 'react';
 import { Input } from 'antd';
-import { search } from '../../services/internal-api/anime';
+import { search } from '../../services/api/anime';
 import FilterOption from '../../components/filter-option/filter-option';
 import ResultContainer from '../../components/result-container/result-container';
 import { QueryContext } from '../../contexts/query.context';
 import { AlertContext } from '../../contexts/alert.context';
-import { manageAlert } from '../../helpers//alert-utils';
+import { showAlert } from '../../utils//alert-utils';
 import genres from '../../data/genres.json';
 import './category-search.component.css';
 
@@ -19,7 +19,7 @@ const CategorySearch = ({ name }) => {
   const [moreLoading, setMoreLoading] = useState(false);
   const [debounceId, setDebounceId] = useState(null);
   const { query, setQuery } = useContext(QueryContext);
-  const { alert, setAlert } = useContext(AlertContext);
+  const { setAlert } = useContext(AlertContext);
 
   // Handle input change event
   const handleChange = async (e, _newQuery) => {
@@ -39,7 +39,7 @@ const CategorySearch = ({ name }) => {
         setData(results.mediaArray);
         setLoading(false);
       } catch (err) {
-        manageAlert(err, alert, setAlert);
+        showAlert(err.message, setAlert, true);
         setData([]);
         setLoading(false);
       }
@@ -91,7 +91,7 @@ const CategorySearch = ({ name }) => {
           setData(appended);
           setMoreLoading(false);
         } catch (err) {
-          manageAlert(err, alert, setAlert);
+          showAlert(err.message, setAlert, true);
           setNoMoreData(true);
           setMoreLoading(false);
         }
