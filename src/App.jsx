@@ -9,7 +9,7 @@ import Loader from './components/loader/loader';
 
 // pages and layouts
 import Root from './layouts/root/root';
-import Home from './pages/home/home';
+const Home = lazy(() => import('./pages/home/home'));
 const SearchWrapper = lazy(() =>
   import('./layouts/search-wrapper/search-wrapper')
 );
@@ -23,7 +23,14 @@ const Anime = lazy(() => import('./pages/anime/anime'));
 // routes definitions
 const routerConfig = createRoutesFromElements(
   <Route path="/" element={<Root />}>
-    <Route index element={<Home />} />
+    <Route
+      index
+      element={
+        <Suspense fallback={<Loader />}>
+          <Home />
+        </Suspense>
+      }
+    />
     <Route
       path="search"
       element={

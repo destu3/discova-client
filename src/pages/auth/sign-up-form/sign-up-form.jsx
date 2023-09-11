@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AlertContext } from '../../../contexts/alert.context';
 import { showAlert } from '../../../utils/alert-utils';
-import { redirectHome } from '../../../utils/auth-utils';
+import { redirectHome } from '../../../utils/common';
 import FormInput from '../../../components/form-input/form-input';
 import '../auth.css';
 
@@ -133,11 +133,11 @@ const SignUpForm = () => {
             type="file"
             name="pfp"
             id="pfp"
-            accept="image/*"
+            accept="image/png, image/jpeg"
             onChange={previewImage}
           />
           {preview && (
-            <div className="thumbnail flex justify-center w-full aspect-square">
+            <div className="thumbnail flex justify-center w-full aspect-square mt-2">
               <img
                 className="rounded-md aspect-square w-full"
                 src={preview}

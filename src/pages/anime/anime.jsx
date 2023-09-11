@@ -49,7 +49,7 @@ const Anime = () => {
               backgroundRepeat: 'repeat',
               backgroundSize: animeInfo.bannerImage ? 'cover' : 'contain',
             }}
-            className={`banner xs:h-44 sm:h-[250px] lg:h-[350px] ${
+            className={`banner xs:h-44 sm:h-[250px] lg:h-[300px] ${
               !animeInfo.bannerImage ? 'blur-[6px]' : ''
             }`}
           ></div>
@@ -62,7 +62,7 @@ const Anime = () => {
             }}
             className="poster-banner xs:hidden w-full h-[400px]"
           ></div>
-          <main className="mt-2 p-2 pb-4 sm:container mx-auto">
+          <main className="mt-2 pt-[2px] p-2 pb-4 sm:container mx-auto">
             <MainContent animeInfo={animeInfo} />
           </main>
         </animated.div>

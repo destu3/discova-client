@@ -1,4 +1,5 @@
 import { handleResponse } from '../../utils/api-utils';
+import { domain } from '../../utils/common';
 
 const updateLocalStorage = (updatedList, listType) => {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -7,19 +8,14 @@ const updateLocalStorage = (updatedList, listType) => {
 };
 
 export const addEntryToList = async (animeId, listType) => {
-  const res = await fetch(
-    `https://discova-server.onrender.com/api/user/list/${animeId}`,
-    {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ listType }),
-      withCredentials: true,
-      credentials: 'include',
-    }
-  );
+  const res = await fetch(`${domain}/api/user/list/${animeId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({ listType }),
+  });
   const { updatedList } = await handleResponse(res);
   updateLocalStorage(updatedList, listType);
 
@@ -27,19 +23,14 @@ export const addEntryToList = async (animeId, listType) => {
 };
 
 export const removeAnimeFromList = async (animeId, listType) => {
-  const res = await fetch(
-    `https://discova-server.onrender.com/api/user/list/${animeId}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ listType }),
-      withCredentials: true,
-      credentials: 'include',
-    }
-  );
+  const res = await fetch(`${domain}/api/user/list/${animeId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({ listType }),
+  });
   const { updatedList } = await handleResponse(res);
   updateLocalStorage(updatedList, listType);
 

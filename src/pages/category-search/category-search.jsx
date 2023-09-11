@@ -74,16 +74,20 @@ const CategorySearch = ({ name }) => {
 
   // Handle load more action
   const handleLoadMore = async () => {
-    if (noMoreData === false)
-      if (
-        document.documentElement.scrollTop +
-          document.documentElement.clientHeight ===
-        document.documentElement.scrollHeight
-      ) {
+    if (noMoreData === false) {
+      const scrollPosition = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.clientHeight;
+      const scrollHeight = document.documentElement.scrollHeight;
+
+      // Calculate 85% of scroll height and round it down
+      const eightyPercentScrollHeight = Math.floor(0.85 * scrollHeight);
+
+      if (scrollPosition + windowHeight >= eightyPercentScrollHeight) {
         const newQuery = { ...query, page: ++query.page };
 
         setQuery(newQuery);
         setMoreLoading(true);
+
         try {
           const results = await search(newQuery);
           const mediaArray = handleDuplicates(data, results.mediaArray);
@@ -96,6 +100,7 @@ const CategorySearch = ({ name }) => {
           setMoreLoading(false);
         }
       }
+    }
   };
 
   useEffect(() => {

@@ -1,13 +1,12 @@
 import { removeProps } from '../../../utils/object-utils';
 import { handleResponse } from '../../../utils/api-utils';
+import { domain } from '../../../utils/common';
 
 // Registers a new user by making an API call to the sign-up endpoint and handling the response.
 export const register = async payload => {
   // Make an API call to the sign up endpoint
-  const res = await fetch('https://discova-server.onrender.com/api/sign-up', {
+  const res = await fetch(`${domain}/api/sign-up`, {
     method: 'POST',
-    withCredentials: true,
-    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,

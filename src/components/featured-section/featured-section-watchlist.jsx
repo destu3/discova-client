@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react';
-import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import HeaderCard from '../header-card/header-card';
 import SkeletonHeader from '../skeleton-loaders/skeleton-header';
 import Card from '../card/card';

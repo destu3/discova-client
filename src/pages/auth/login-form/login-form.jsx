@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AlertContext } from '../../../contexts/alert.context';
 import { showAlert } from '../../../utils/alert-utils';
-import { redirectHome } from '../../../utils/auth-utils';
+import { redirectHome } from '../../../utils/common';
 import '../auth.css';
 
 // Components

@@ -20,7 +20,7 @@ const ResultContainer = props => {
         : /* Render data cards */
           data.map(anime => (
             <div
-              className="card relative text-[var(--main-text)]"
+              className="card w-full overflow-hidden relative text-[var(--main-text)]"
               style={{
                 color: 'var(--main-text)',
                 '--main-color': anime.coverImage.color,

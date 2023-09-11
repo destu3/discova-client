@@ -36,7 +36,7 @@ const MainContent = ({ animeInfo }) => {
             .filter(({ mediaRecommendation }) => mediaRecommendation !== null)
             .map(({ mediaRecommendation: media }) => (
               <div
-                className="card relative text-[var(--main-text)]"
+                className="card overflow-hidden relative text-[var(--main-text)]"
                 style={{
                   color: 'var(--main-text)',
                   '--main-color': media.coverImage.color,
