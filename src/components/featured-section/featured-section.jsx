@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext, useRef } from 'react';
-import { register } from 'swiper/element/bundle';
 import { Carousel } from 'antd';
 import HeaderCard from '../../components/header-card/header-card';
 import SkeletonHeader from '../../components/skeleton-loaders/skeleton-header';
@@ -8,9 +7,6 @@ import { AlertContext } from '../../contexts/alert.context';
 import { showAlert } from '../../utils/alert-utils';
 import './featured-section.component.css';
 import Skeleton from '../skeleton-loaders/skeleton';
-
-// register swiper web component
-register();
 
 const FeaturedSection = props => {
   // Destructure props
@@ -24,7 +20,7 @@ const FeaturedSection = props => {
     'slides-per-group-auto': true,
     speed: 700,
     'allow-touch-move': isTouchDevice,
-    rewind: true,
+    'free-mode': isTouchDevice,
   };
 
   // State for loading and data

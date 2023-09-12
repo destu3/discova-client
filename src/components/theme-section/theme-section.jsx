@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HashLoader } from 'react-spinners';
+import { BeatLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
 import ThemeCard from '../theme-card/theme-card';
 import { getThemes } from '../../services/api/anime';
@@ -47,7 +47,7 @@ const ThemeSection = () => {
         </>
       ) : themes === null ? (
         <div className="my-14 flex flex-col gap-4 items-center">
-          <HashLoader size={50} color="#bb86fc" />
+          <BeatLoader color="#bb86fc" />
         </div>
       ) : (
         <div className="pb-14">There are no themes for this anime</div>

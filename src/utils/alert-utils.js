@@ -18,5 +18,5 @@ export const showAlert = (message, stateSetter, err) => {
       type,
       visible: false,
     });
-  }, 4000);
+  }, 2500);
 };

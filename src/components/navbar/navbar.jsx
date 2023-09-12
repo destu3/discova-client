@@ -23,37 +23,11 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="h-12" />
         </NavLink>
 
-        {/* Main Menu */}
-        {/* <div className=" hidden md:flex items-center gap-3">
-          <ul className="items-center flex gap-6 text-sm">
-            <li>
-              <NavLink to="/" className="nav-link-text">
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/animelist" className="nav-link-text">
-                Anime List
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/themes" className="nav-link-text">
-                Themes
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/characters" className="nav-link-text">
-                Characters
-              </NavLink>
-            </li>
-          </ul>
-        </div> */}
-
         {/* Right Menu */}
         <div className="right flex items-center gap-3 text-sm">
           {/* Search Icon */}
           <Link to="search" className="search-icon-wrapper">
-            <i className="fa-solid nav-link-text fa-magnifying-glass text-[1.5rem] pr-2" />
+            <i className="fa-solid nav-link-text fa-magnifying-glass text-[1.3rem] pr-2 relative top-[2px]" />
           </Link>
 
           {/* User Authentication */}

@@ -8,3 +8,8 @@ export const redirectHome = time => {
     window.location.assign('/');
   }, time);
 };
+
+export const logout = () => {
+  localStorage.removeItem('currentUser');
+  localStorage.removeItem('token');
+};

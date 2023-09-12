@@ -1,6 +1,7 @@
 import { useEffect, useContext } from 'react';
+import { register } from 'swiper/element/bundle';
 import FeaturedSection from '../../components/featured-section/featured-section';
-import FeaturedSectionWatchlist from '../../components/featured-section/featured-section-watchlist';
+import FeaturedSectionWatchList from '../../components/featured-section/featured-section-watchlist';
 import { UserContext } from '../../contexts/user.context';
 import {
   getTrending,
@@ -15,6 +16,9 @@ import {
   getNextSeason,
 } from '../../utils/anime-utils';
 import { getWatchlistAnime } from '../../services/api/anime';
+
+// register swiper web component
+register();
 
 const Home = () => {
   const season = capitalizeWords(getSeason(getYear));
@@ -36,12 +40,12 @@ const Home = () => {
 
       <main className="w-11/12 mt-10 sm:mt-20 mx-auto px-2 pb-5">
         {/* List */}
-        {/* {currentUser?.watchList.length > 0 && (
-          <FeaturedSectionWatchlist
+        {currentUser?.watchList.length > 0 && (
+          <FeaturedSectionWatchList
             dataFetcher={getWatchlistAnime}
             title="My List"
           />
-        )} */}
+        )}
 
         {/* Trending Section */}
         <FeaturedSection

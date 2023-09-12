@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import { AlertContext } from '../../../contexts/alert.context';
 import { showAlert } from '../../../utils/alert-utils';
 import { redirectHome } from '../../../utils/common';
@@ -20,6 +21,7 @@ const defaultFields = {
 const SignUpForm = () => {
   const [fields, setFields] = useState(defaultFields);
   const [preview, setPreview] = useState('');
+  const [requestPending, setRequestPending] = useState(false);
   const { email, username, fullName, password, confirmPassword } = fields;
   const { setAlert } = useContext(AlertContext);
 
@@ -37,11 +39,13 @@ const SignUpForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      // const { username } = await register({ ...fields });
+      setRequestPending(true);
       const { username } = await register(fields);
       showAlert(`Welcome to Discova ${username}`, setAlert);
+      setRequestPending(false);
       redirectHome(2000);
     } catch (err) {
+      setRequestPending(false);
       showAlert(err.message, setAlert, true);
     }
   };
@@ -147,8 +151,18 @@ const SignUpForm = () => {
           )}
 
           {/* Render the Sign Up button */}
-          <button onClick={handleSubmit} className="form-btn my-6 mt-9">
+          <button
+            onClick={handleSubmit}
+            className="form-btn my-6 mt-9 relative"
+          >
             Sign Up
+            <ClipLoader
+              loading={requestPending}
+              className="absolute top-0 bottom-0 my-auto mx-0 right-5"
+              size={20}
+              speedMultiplier={0.8}
+              color="#111827"
+            />
           </button>
 
           {/* Render the "Already have an account?" text and Log In button */}

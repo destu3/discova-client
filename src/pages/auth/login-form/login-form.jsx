@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import { AlertContext } from '../../../contexts/alert.context';
 import { showAlert } from '../../../utils/alert-utils';
 import { redirectHome } from '../../../utils/common';
@@ -18,6 +19,7 @@ const defaultFields = {
 
 const LoginForm = () => {
   const [fields, setFields] = useState(defaultFields);
+  const [requestPending, setRequestPending] = useState(false);
   const { email, password } = fields;
   const { setAlert } = useContext(AlertContext);
 
@@ -35,10 +37,13 @@ const LoginForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
+      setRequestPending(true);
       const { username } = await login(email, password);
       showAlert(`Welcome back ${username}`, setAlert);
+      setRequestPending(false);
       redirectHome(2000);
     } catch (err) {
+      setRequestPending(false);
       showAlert(err.message, setAlert, true);
     }
   };
@@ -73,8 +78,15 @@ const LoginForm = () => {
           />
 
           {/* Render the login button */}
-          <button onClick={handleSubmit} className="form-btn my-6">
+          <button onClick={handleSubmit} className="form-btn my-6 relative">
             Log In
+            <ClipLoader
+              loading={requestPending}
+              className="absolute top-0 bottom-0 my-auto mx-0 right-5"
+              size={20}
+              speedMultiplier={0.8}
+              color="#111827"
+            />
           </button>
 
           {/* Render the "New to Discova?" text and sign up button */}
