@@ -20,7 +20,9 @@ const FeaturedSection = props => {
     'slides-per-group-auto': true,
     speed: 700,
     'allow-touch-move': isTouchDevice,
+    'css-mode': isTouchDevice,
     'free-mode': isTouchDevice,
+    rewind: false,
   };
 
   // State for loading and data
@@ -68,7 +70,7 @@ const FeaturedSection = props => {
         ))
       : data.map(anime => (
           <swiper-slide
-            class="card mr-5 aspect-[37/53] relative w-[150px] md:w-[180px] overflow-hidden rounded-[4px]"
+            class="card mr-5 h-[214.86px] w-[150px] md:w-[180px] md:h-[257.84px] relative overflow-hidden rounded-[4px]"
             style={{
               color: 'var(--main-text)',
               '--main-color': anime.coverImage.color,

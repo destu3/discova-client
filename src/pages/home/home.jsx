@@ -38,7 +38,7 @@ const Home = () => {
         featuredHeader={true}
       />
 
-      <main className="w-11/12 mt-10 sm:mt-20 mx-auto px-2 pb-5">
+      <main className="w-full md:w-11/12 mt-10 sm:mt-20 mx-auto pl-2 md:px-2 pb-5">
         {/* List */}
         {currentUser?.watchList.length > 0 && (
           <FeaturedSectionWatchList

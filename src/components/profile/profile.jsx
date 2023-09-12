@@ -22,11 +22,32 @@ const Profile = ({ currentUser }) => {
     setActionsVisible(false);
   };
 
+  useEffect(() => {
+    const { current } = actionsRef;
+
+    const hideActions = e => {
+      if (
+        current.classList.contains('pointer-events-none') ||
+        e.target.classList.contains('profile-pic-wrapper')
+      ) {
+        console.log('already hidden or is pfp so return');
+        return;
+      }
+      setActionsVisible(false);
+    };
+
+    document.addEventListener('click', hideActions);
+
+    return () => {
+      document.removeEventListener('click', hideActions);
+    };
+  }, []);
+
   return (
     <div
       onMouseOver={showActions}
       onClick={showActions}
-      className="flex items-center h-fit cursor-pointer relative"
+      className="flex items-center h-fit cursor-pointer relative profile-pic-wrapper"
     >
       {/* User profile picture */}
       <img
