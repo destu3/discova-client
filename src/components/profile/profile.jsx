@@ -10,7 +10,7 @@ const Profile = ({ currentUser }) => {
 
   const logUserOut = () => {
     logout();
-    showAlert('You have logged out. Redirecting...', setAlert);
+    showAlert('You have been logged out', setAlert);
     redirectHome(2500);
   };
 
@@ -30,7 +30,6 @@ const Profile = ({ currentUser }) => {
         current.classList.contains('pointer-events-none') ||
         e.target.classList.contains('profile-pic-wrapper')
       ) {
-        console.log('already hidden or is pfp so return');
         return;
       }
       setActionsVisible(false);

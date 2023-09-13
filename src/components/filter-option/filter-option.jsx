@@ -8,9 +8,9 @@ const FilterOption = props => {
   // Destructure props
   const { field, checkBox, values, changeHandler, initVisibility } = props;
 
-  // State for options visibility and current season (for Checkbox component)
   const [optionsVisible, setOptionsVisible] = useState(initVisibility);
   const [currentSeason, setCurrentSeason] = useState(null);
+  const [sortOption, setSortOption] = useState(null);
 
   // Reference for the field values container element
   const fieldValuesRef = useRef(null);
@@ -23,9 +23,11 @@ const FilterOption = props => {
   // Determine the maximum height for the field values container
   const determineMaxHeight = field => {
     let height;
-    if (field === 'Seasons') height = 132;
-    else if (field === 'Year') height = 44;
-    else height = 636;
+    if (field === 'Seasons' || field === 'Sort By') {
+      height = 132;
+    } else if (field === 'Year') {
+      height = 44;
+    } else height = 636;
 
     return height;
   };
@@ -41,13 +43,15 @@ const FilterOption = props => {
   }, []);
 
   return (
-    <div className={`filter w-full overflow-hidden ${field}`}>
+    <div className={`filter w-full overflow-hidden lg:mb-1 ${field}`}>
       {/* Filter header */}
-      <header className="filter-header border-b flex justify-between items-center text-[var(--main-text)] border-[#424242] border-solid pb-3 my-4">
-        <h3 className="field-name font-semibold">{field}</h3>
+      <header
+        onClick={toggleVisible}
+        className="filter-header cursor-pointer border-b flex justify-between items-center text-[var(--main-text)] border-[#424242] border-solid pb-3 my-4"
+      >
+        <div className="field-name font-semibold">{field}</div>
         {/* Toggle button */}
         <button
-          onClick={toggleVisible}
           className={`toggle mr-1 outline-none ${
             optionsVisible ? 'rotate-[-180deg]' : ''
           } transition-transform duration-300`}
@@ -68,7 +72,9 @@ const FilterOption = props => {
             <Checkbox
               changeHandler={changeHandler}
               setCurrentSeason={setCurrentSeason}
+              setSortOption={setSortOption}
               currentSeason={currentSeason}
+              sortOption={sortOption}
               key={index}
               value={value}
             />

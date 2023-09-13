@@ -15,15 +15,12 @@ const FeaturedSectionWatchList = props => {
   const isTouchDevice = 'ontouchstart' in window;
 
   const swiperConfig = {
-    navigation: !isTouchDevice,
+    navigation: false,
     class: 'results-container w-full featured-sect',
     'slides-per-view': 'auto',
     'slides-per-group-auto': true,
-    speed: 700,
-    'allow-touch-move': isTouchDevice,
-    'css-mode': isTouchDevice,
-    'free-mode': isTouchDevice,
-    rewind: false,
+    'css-mode': true,
+    'free-mode': true,
   };
 
   // State for loading and data
@@ -31,10 +28,11 @@ const FeaturedSectionWatchList = props => {
   const { loading, data } = state;
   const swiperRef = useRef(null);
   const { currentUser } = useContext(UserContext);
+
   const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
-    if (!featuredHeader) {
+    if (!featuredHeader && isTouchDevice) {
       const { current } = swiperRef;
       const params = {
         // array with CSS styles
@@ -60,38 +58,68 @@ const FeaturedSectionWatchList = props => {
   }, [currentUser]);
 
   const determineRender = () =>
-    loading
-      ? Array.from({ length: 20 }).map((_, index) => (
-          <swiper-slide
-            class="flex flex-col mr-5 items-center overflow-hidden w-fit rounded-[4px]"
-            key={index}
-          >
-            <Skeleton featured={true} />
-          </swiper-slide>
-        ))
-      : data.map(anime => (
-          <swiper-slide
-            class="card mr-5 h-[214.86px] w-[150px] md:w-[180px] md:h-[257.84px] relative overflow-hidden rounded-[4px]"
-            style={{
-              color: 'var(--main-text)',
-              '--main-color': anime.coverImage.color,
-            }}
-            key={anime.id}
-          >
-            <Card anime={anime} />
-          </swiper-slide>
-        ));
+    isTouchDevice ? (
+      <swiper-container init="false" ref={swiperRef} {...swiperConfig}>
+        {loading
+          ? Array.from({ length: currentUser.watchList.length }).map(
+              (_, index) => (
+                <swiper-slide
+                  class="flex flex-col mr-5 items-center overflow-hidden w-fit rounded-[4px]"
+                  key={index}
+                >
+                  <Skeleton featured={true} />
+                </swiper-slide>
+              )
+            )
+          : data.map(anime => (
+              <swiper-slide
+                class="card mr-5 h-[214.86px] w-[150px] md:w-[180px] md:h-[257.84px] relative overflow-hidden rounded-[4px]"
+                style={{
+                  color: 'var(--main-text)',
+                  '--main-color': anime.coverImage.color,
+                }}
+                key={anime.id}
+              >
+                <Card anime={anime} />
+              </swiper-slide>
+            ))}
+      </swiper-container>
+    ) : (
+      <section className="featured-grid w-full featured-sect">
+        {loading
+          ? Array.from({ length: currentUser.watchList.length }).map(
+              (_, index) => (
+                <div
+                  className="flex flex-col items-center w-full skeleton-card"
+                  key={index}
+                >
+                  <Skeleton />
+                </div>
+              )
+            )
+          : data.map(anime => (
+              <div
+                className="card w-full mr-5 relative overflow-hidden rounded-[4px]"
+                style={{
+                  color: 'var(--main-text)',
+                  '--main-color': anime.coverImage.color,
+                }}
+                key={anime.id}
+              >
+                <Card anime={anime} />
+              </div>
+            ))}
+      </section>
+    );
 
   return (
-    <>
+    <section className="featured-section">
       {!featuredHeader ? (
         <>
           <h2 className="sect-title font-semibold mb-3 text-lg sm:text-xl text-[var(--heading-grey)]">
             {title}
           </h2>
-          <swiper-container init="false" ref={swiperRef} {...swiperConfig}>
-            {determineRender()}
-          </swiper-container>
+          {determineRender()}
         </>
       ) : (
         <Carousel
@@ -116,7 +144,7 @@ const FeaturedSectionWatchList = props => {
           )}
         </Carousel>
       )}
-    </>
+    </section>
   );
 };
 

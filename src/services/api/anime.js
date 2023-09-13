@@ -15,6 +15,8 @@ export const search = async query => {
 
   if (query.year) params += `&seasonYear=${query.year}`;
 
+  if (query.sort) params += `&sort=${query.sort.toUpperCase()}_DESC`;
+
   const endpoint = `${domain}/api/anime/search?${params}`;
 
   const res = await fetch(endpoint);

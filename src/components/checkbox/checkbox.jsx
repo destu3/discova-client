@@ -4,17 +4,25 @@ import { QueryContext } from '../../contexts/query.context';
 import './checkbox.component.css';
 
 const seasons = ['Spring', 'Summer', 'Fall', 'Winter'];
+const sortOptions = ['Popularity', 'Trending', 'Average Score', 'Favourites'];
 
 const Checkbox = props => {
   // Destructure props
-  const { value, setCurrentSeason, currentSeason, changeHandler } = props;
+  const {
+    value,
+    setCurrentSeason,
+    currentSeason,
+    sortOption,
+    setSortOption,
+    changeHandler,
+  } = props;
 
   // State and context variables
   const [randomId, setRandomId] = useState(null);
   const { query } = useContext(QueryContext);
 
-  // Check if the checkbox represents a season
   const isSeason = seasons.includes(value);
+  const isSortOption = sortOptions.includes(value);
 
   // Function to toggle genres in the query
   const toggleGenre = (genresSet, genre) => {
@@ -25,12 +33,21 @@ const Checkbox = props => {
     }
   };
 
-  // Function to toggle the selected season in the query
-  const toggleSeason = (newQuery, value) => {
+  // Function to set the selected season in the query
+  const setSeason = (newQuery, value) => {
     if (newQuery.season === value) {
       newQuery.season = null;
     } else {
       newQuery.season = value;
+    }
+  };
+
+  // function to set the sort option in the query
+  const setOption = (newQuery, value) => {
+    if (newQuery.sort === value) {
+      newQuery.sort = null;
+    } else {
+      newQuery.sort = value;
     }
   };
 
@@ -41,9 +58,13 @@ const Checkbox = props => {
     const newQuery = { ...query, page: 1 };
 
     if (isSeason) {
-      toggleSeason(newQuery, value);
+      setSeason(newQuery, value);
       const newSeason = currentSeason !== value ? value : undefined;
       setCurrentSeason(newSeason);
+    } else if (isSortOption) {
+      setOption(newQuery, value);
+      const newOption = sortOption !== value ? value : undefined;
+      setSortOption(newOption);
     } else {
       toggleGenre(newQuery.genres, value);
     }
@@ -59,14 +80,14 @@ const Checkbox = props => {
   return (
     <div className="checkbox-wrapper">
       {/* Checkbox input */}
-      {isSeason ? (
+      {isSeason || isSortOption ? (
         <input
           data-value={value}
           type="checkbox"
           onClick={handleClick}
           id={randomId}
           className="checkbox"
-          checked={currentSeason === value}
+          checked={currentSeason === value || sortOption === value}
           readOnly
         />
       ) : (

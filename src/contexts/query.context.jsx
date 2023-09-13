@@ -15,6 +15,7 @@ export const QueryProvider = ({ children }) => {
     genres: new Set(),
     year: null,
     season: undefined,
+    sort: undefined,
   });
 
   // Create the value object for the context

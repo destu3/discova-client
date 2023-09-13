@@ -8,6 +8,7 @@ import { AlertContext } from '../../contexts/alert.context';
 import { showAlert } from '../../utils//alert-utils';
 import genres from '../../data/genres.json';
 import './category-search.component.css';
+import '../../components/skeleton-loaders/skeleton.component.css';
 
 const { Search } = Input;
 
@@ -141,6 +142,15 @@ const CategorySearch = ({ name }) => {
             values={['Spring', 'Summer', 'Fall', 'Winter']}
             field="Seasons"
           />
+
+          <FilterOption
+            changeHandler={handleChange}
+            initVisibility={false}
+            checkBox={true}
+            values={['Popularity', 'Trending', 'Average Score', 'Favourites']}
+            field="Sort By"
+          />
+
           <FilterOption
             changeHandler={handleChange}
             initVisibility={false}
@@ -165,6 +175,15 @@ const CategorySearch = ({ name }) => {
             values={['Spring', 'Summer', 'Fall', 'Winter']}
             field="Seasons"
           />
+
+          <FilterOption
+            changeHandler={handleChange}
+            initVisibility={true}
+            checkBox={true}
+            values={['Popularity', 'Trending', 'Average Score', 'Favourites']}
+            field="Sort By"
+          />
+
           <FilterOption
             changeHandler={handleChange}
             initVisibility={true}
