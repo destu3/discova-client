@@ -80,8 +80,8 @@ const CategorySearch = ({ name }) => {
       const windowHeight = document.documentElement.clientHeight;
       const scrollHeight = document.documentElement.scrollHeight;
 
-      // Calculate 85% of scroll height and round it down
-      const eightyPercentScrollHeight = Math.floor(0.85 * scrollHeight);
+      // Calculate 95% of scroll height and round it down
+      const eightyPercentScrollHeight = Math.floor(0.95 * scrollHeight);
 
       if (scrollPosition + windowHeight >= eightyPercentScrollHeight) {
         const newQuery = { ...query, page: ++query.page };

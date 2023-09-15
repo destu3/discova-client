@@ -1,6 +1,8 @@
 import moment from 'moment/moment';
 import DOMPurify from 'dompurify';
 import slugify from 'slugify';
+import { showAlert } from './alert-utils';
+import { addEntryToList, removeAnimeFromList } from '../services/api/user';
 
 // Retrieves the current year.
 export function getYear() {
@@ -173,4 +175,30 @@ export const capitalizeWords = str =>
 export const parseThemeSlug = slug => {
   const type = slug.startsWith('OP') ? 'OP' : 'ED';
   return `${type} ${slug.slice(2).replace('-', ' ')}`;
+};
+
+export const addEntry = async (animeOpts, userState, setAlert) => {
+  const { animeId, listType } = animeOpts;
+  const { currentUser, setCurrentUser } = userState;
+
+  try {
+    const updatedList = await addEntryToList(animeId, listType);
+    showAlert('Entry added successfully', setAlert);
+    setCurrentUser({ ...currentUser, [listType]: updatedList });
+  } catch (err) {
+    showAlert('Failed to add entry. Please try later', setAlert, true);
+  }
+};
+
+export const removeEntry = async (animeOpts, userState, setAlert) => {
+  const { animeId, listType } = animeOpts;
+  const { currentUser, setCurrentUser } = userState;
+
+  try {
+    const updatedList = await removeAnimeFromList(animeId, listType);
+    showAlert('Entry removed successfully', setAlert);
+    setCurrentUser({ ...currentUser, [listType]: updatedList });
+  } catch (err) {
+    showAlert('Failed to remove entry. Please try later', setAlert, true);
+  }
 };

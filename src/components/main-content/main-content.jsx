@@ -1,11 +1,35 @@
 import { Tabs } from 'antd';
+import ActionButton from '../action-button/action-button';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/user.context';
+import { AlertContext } from '../../contexts/alert.context';
 import Card from '../card/card';
 import AnimeOverview from '../anime-overview/anime-overview';
 import ThemeSection from '../theme-section/theme-section';
+import { useListStatus, cardButtonsConfig } from '../../hooks/useListStatus';
 import { calculateDaysToAiring, showAiringInfo } from '../../utils/anime-utils';
+import { addEntry, removeEntry } from '../../utils/anime-utils';
 import './main-content.component.css';
+import { Link } from 'react-router-dom';
 
 const MainContent = ({ animeInfo }) => {
+  const { id: animeId } = animeInfo;
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { setAlert } = useContext(AlertContext);
+  const renderOpt = useListStatus(animeId);
+
+  const addToList = listType => {
+    addEntry({ animeId, listType }, { currentUser, setCurrentUser }, setAlert);
+  };
+
+  const removeFromList = listType => {
+    removeEntry(
+      { animeId, listType },
+      { currentUser, setCurrentUser },
+      setAlert
+    );
+  };
+
   const tabItems = [
     {
       key: 'overview',
@@ -22,7 +46,7 @@ const MainContent = ({ animeInfo }) => {
       label: `Recommendations`,
     },
 
-    { key: 'Reviews', label: `Reviews`, children: `Content of Reviews` },
+    // { key: 'Reviews', label: `Reviews`, children: `Content of Reviews` },
   ];
 
   if (animeInfo?.recommendations.nodes.length > 0) {
@@ -53,6 +77,8 @@ const MainContent = ({ animeInfo }) => {
     tabItems[2].children = (
       <div className="pb-14">No recommendations for this anime</div>
     );
+
+  const buttons = cardButtonsConfig(addToList, removeFromList)[renderOpt];
 
   return (
     <section className="main-content mt-2 lg:px-5 2xl:px-20">
@@ -93,9 +119,25 @@ const MainContent = ({ animeInfo }) => {
                 {animeInfo.genres.join(', ')}
               </div>
 
-              <button className="bg-[#804fbd] transition-all py-3 px-10 rounded-md font-medium">
-                Add to List
-              </button>
+              <div className="buttons flex gap-2">
+                {!renderOpt ? (
+                  <Link to={'/login'}>
+                    <button className="bg-[#804fbd] transition-all hover:shadow-[rgba(50,50,93,0.25)_0px_13px_27px_-5px,rgba(0,0,0,0.3)_0px_8px_16px_-8px] py-3 px-10 rounded-md font-medium">
+                      Add to List
+                    </button>
+                  </Link>
+                ) : (
+                  buttons.map(button => (
+                    <ActionButton
+                      listTarget={button.listTarget}
+                      key={button.iconClassName}
+                      handler={button.handler}
+                      title={button.title}
+                      iconClassName={button.iconClassName}
+                    />
+                  ))
+                )}
+              </div>
             </div>
           </header>
 
