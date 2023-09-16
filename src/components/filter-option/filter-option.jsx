@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { QueryContext } from '../../contexts/query.context';
 import Checkbox from '../checkbox/checkbox';
 import NumberInput from '../number-input/number-input';
 
@@ -7,10 +8,11 @@ import './filter-option.component.css';
 const FilterOption = props => {
   // Destructure props
   const { field, checkBox, values, changeHandler, initVisibility } = props;
+  const { query } = useContext(QueryContext);
 
   const [optionsVisible, setOptionsVisible] = useState(initVisibility);
-  const [currentSeason, setCurrentSeason] = useState(null);
-  const [sortOption, setSortOption] = useState(null);
+  const [currentSeason, setCurrentSeason] = useState(query.season);
+  const [sortOption, setSortOption] = useState(query.sort);
 
   // Reference for the field values container element
   const fieldValuesRef = useRef(null);

@@ -3,7 +3,7 @@ const ActionButton = props => {
 
   const condClass = cardBtn
     ? 'card-btn text-[#272525] p-[14px] mb-[6px] w-6 h-6'
-    : 'w-9 p-6 h-9 border-[#838383] hover:border-[var(--main-text)] border-[3px] ';
+    : 'w-9 p-5 h-9 border-[#838383] hover:border-[var(--main-text)] border-[3px] ';
   return (
     <button
       onClick={() => {
@@ -13,7 +13,7 @@ const ActionButton = props => {
       className={`flex justify-center items-center rounded-full transition-all duration-200 ${condClass}`}
     >
       <i
-        className={`${iconClassName} ${!cardBtn ? 'text-[25px]' : 'text-lg'}`}
+        className={`${iconClassName} ${!cardBtn ? 'text-[22px]' : 'text-lg'}`}
       ></i>
     </button>
   );

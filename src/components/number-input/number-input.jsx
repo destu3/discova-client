@@ -19,7 +19,7 @@ const NumberInput = ({ changeHandler }) => {
     <input
       onChange={handleChange}
       type="number"
-      defaultValue=""
+      defaultValue={!query.year ? '' : String(query.year)}
       min={1940}
       max={2024}
     />

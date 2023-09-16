@@ -11,7 +11,7 @@ export function getYear() {
   const year = new Date().getFullYear();
 
   // Get the current year
-  return currentSeason === 'WINTER' ? year + 1 : year;
+  return currentSeason === 'Winter' ? year + 1 : year;
 }
 
 // determines the season and year based on a release date argument
@@ -48,18 +48,18 @@ export function getSeason() {
   // Get the current month and determine the season
   const date = new Date();
   const month = date.getMonth() + 1;
-  let season = 'winter';
+  let season = 'Winter';
 
   if (month >= 10 && month <= 12) {
-    season = 'fall';
+    season = 'Fall';
   } else if (month >= 4 && month <= 6) {
-    season = 'spring';
+    season = 'Spring';
   } else if (month >= 7 && month <= 9) {
-    season = 'summer';
+    season = 'Summer';
   }
 
   // Convert the season to uppercase and return it
-  return season.toUpperCase();
+  return season;
 }
 
 // Retrieves the next season based on the current season.
@@ -67,14 +67,14 @@ export function getNextSeason() {
   const season = getSeason();
 
   // Get the next season based on the current season
-  if (season === 'WINTER') {
-    return 'SPRING';
-  } else if (season === 'SPRING') {
-    return 'SUMMER';
-  } else if (season === 'SUMMER') {
-    return 'FALL';
+  if (season === 'Winter') {
+    return 'Spring';
+  } else if (season === 'Spring') {
+    return 'Summer';
+  } else if (season === 'Summer') {
+    return 'Fall';
   } else {
-    return 'WINTER';
+    return 'Winter';
   }
 }
 

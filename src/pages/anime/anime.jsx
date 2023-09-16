@@ -33,7 +33,7 @@ const Anime = () => {
   });
 
   return (
-    <div className="wrapper absolute top-0 left-0 w-full">
+    <div className="wrapper absolute top-0 left-0 bottom-0 right-0">
       {animeInfo ? (
         <animated.div
           aria-label="anime-content"

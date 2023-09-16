@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import { Carousel } from 'antd';
+import { Link } from 'react-router-dom';
 import HeaderCard from '../../components/header-card/header-card';
 import SkeletonHeader from '../../components/skeleton-loaders/skeleton-header';
 import Card from '../card/card';
@@ -7,10 +8,11 @@ import { AlertContext } from '../../contexts/alert.context';
 import { showAlert } from '../../utils/alert-utils';
 import './featured-section.component.css';
 import Skeleton from '../skeleton-loaders/skeleton';
+import { QueryContext } from '../../contexts/query.context';
 
 const FeaturedSection = props => {
   // Destructure props
-  const { dataFetcher, featuredHeader, title } = props;
+  const { dataFetcher, featuredHeader, title, filter } = props;
   const isTouchDevice = 'ontouchstart' in window;
 
   const swiperConfig = {
@@ -26,7 +28,7 @@ const FeaturedSection = props => {
   const [state, setState] = useState({ loading: true, data: [] });
   const { loading, data } = state;
   const swiperRef = useRef(null);
-
+  const { setQuery } = useContext(QueryContext);
   const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const FeaturedSection = props => {
             ))
           : data.map(anime => (
               <swiper-slide
-                class="card mr-5 h-[214.86px] w-[150px] md:w-[180px] md:h-[257.84px] relative overflow-hidden rounded-[4px]"
+                class="card mr-5 w-[145px] md:w-[160px] aspect-[37/53] relative overflow-hidden rounded-[4px]"
                 style={{
                   color: 'var(--main-text)',
                   '--main-color': anime.coverImage.color,
@@ -104,13 +106,35 @@ const FeaturedSection = props => {
       </section>
     );
 
+  const resetQuery = () => {
+    return {
+      search: '',
+      page: 1,
+      genres: new Set(),
+      year: null,
+      season: undefined,
+      sort: undefined,
+    };
+  };
+
   return (
     <section className="featured-section">
       {!featuredHeader ? (
         <>
-          <h2 className="sect-title font-semibold mb-3 text-lg sm:text-xl text-[var(--heading-grey)]">
-            {title}
-          </h2>
+          <header className="flex items-center justify-between mb-2">
+            <h2 className="sect-title font-semibold text-lg sm:text-xl text-[var(--heading-grey)]">
+              {title}
+            </h2>
+            <Link
+              onClick={() => {
+                setQuery({ ...resetQuery(), ...filter });
+              }}
+              className="text-sm font-medium text-[var(--secondary-text)] transition-all hover:text-[var(--main-text)]"
+              to="search"
+            >
+              View more
+            </Link>
+          </header>
           {determineRender()}
         </>
       ) : (

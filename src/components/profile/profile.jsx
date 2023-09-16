@@ -68,7 +68,7 @@ const Profile = ({ currentUser }) => {
         <div
           role="button"
           onClick={logUserOut}
-          className="user-action action-logout rounded transition-colors py-2 px-3 flex items-center gap-3 hover:bg-[#312f2fe6]"
+          className="user-action action-logout rounded transition-colors py-2 px-3 flex items-center gap-3 hover:bg-[#444343e6]"
         >
           <i className="fa-solid fa-arrow-right-from-bracket text-[1rem]"></i>
           Logout

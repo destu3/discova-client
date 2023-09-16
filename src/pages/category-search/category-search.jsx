@@ -53,7 +53,6 @@ const CategorySearch = ({ name }) => {
   const defaultSearch = async () => {
     const newQuery = { ...query, page: 1 };
     setQuery(newQuery);
-
     setLoading(true);
     const results = await search(newQuery);
     setData(results.mediaArray);
@@ -105,7 +104,16 @@ const CategorySearch = ({ name }) => {
   };
 
   useEffect(() => {
-    defaultSearch();
+    defaultSearch().then(_ => {
+      setQuery({
+        search: '',
+        page: 1,
+        genres: new Set(),
+        year: null,
+        season: undefined,
+        sort: undefined,
+      });
+    });
   }, []);
 
   // Render results with search=""

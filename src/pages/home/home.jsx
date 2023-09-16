@@ -38,7 +38,7 @@ const Home = () => {
         featuredHeader={true}
       />
 
-      <main className="w-full md:w-11/12 mt-10 sm:mt-20 mx-auto p-1 sm:p-2 pb-5">
+      <main className="w-full md:w-11/12 mt-5 mx-auto p-1 sm:p-2 pb-5">
         {/* List */}
         {currentUser?.watchList.length > 0 && (
           <FeaturedSectionWatchList
@@ -52,20 +52,27 @@ const Home = () => {
           dataFetcher={getTrending}
           ariaLabel="Trending Section"
           title="Currently Trending"
+          filter={{ sort: 'Trending' }}
         />
 
         {/* Seasons trending section */}
         <FeaturedSection
           dataFetcher={getPopularThisSeason}
           ariaLabel="Seasons trending section"
-          title={`Popular this Season - ${season} ${year}`}
+          title="Popular this Season"
+          filter={{ sort: 'Popularity', season: getSeason(), year: getYear() }}
         />
 
         {/* Upcoming Section */}
         <FeaturedSection
           dataFetcher={getUpcoming}
           ariaLabel="Upcoming Section"
-          title={`Coming next Season - ${nextSeason} ${year}`}
+          title="Coming next Season"
+          filter={{
+            sort: 'Popularity',
+            season: getNextSeason(),
+            year: getYear(),
+          }}
         />
 
         {/* Popular Section */}
@@ -73,6 +80,7 @@ const Home = () => {
           dataFetcher={getPopular}
           ariaLabel="Popular Section"
           title="Most Popular"
+          filter={{ sort: 'Popularity' }}
         />
       </main>
     </>
