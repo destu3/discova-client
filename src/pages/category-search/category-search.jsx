@@ -104,16 +104,7 @@ const CategorySearch = ({ name }) => {
   };
 
   useEffect(() => {
-    defaultSearch().then(_ => {
-      setQuery({
-        search: '',
-        page: 1,
-        genres: new Set(),
-        year: null,
-        season: undefined,
-        sort: undefined,
-      });
-    });
+    defaultSearch();
   }, []);
 
   // Render results with search=""
@@ -130,6 +121,7 @@ const CategorySearch = ({ name }) => {
       <header className="flex flex-col justify-center items-center">
         {/* Render the search input */}
         <Search
+          defaultValue={query.search}
           className="max-w-[600px]"
           placeholder={`Search for ${name}`}
           allowClear

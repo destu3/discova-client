@@ -9,22 +9,13 @@ import {
   getPopularThisSeason,
   getUpcoming,
 } from '../../services/api/anime';
-import {
-  getYear,
-  getSeason,
-  capitalizeWords,
-  getNextSeason,
-} from '../../utils/anime-utils';
+import { getYear, getSeason, getNextSeason } from '../../utils/anime-utils';
 import { getWatchlistAnime } from '../../services/api/anime';
 
 // register swiper web component
 register();
 
 const Home = () => {
-  const season = capitalizeWords(getSeason(getYear));
-  const nextSeason = capitalizeWords(getNextSeason());
-  const year = getYear();
-
   const { currentUser } = useContext(UserContext);
 
   useEffect(() => {

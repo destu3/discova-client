@@ -23,6 +23,7 @@ const Checkbox = props => {
 
   const isSeason = seasons.includes(value);
   const isSortOption = sortOptions.includes(value);
+  const genreSelected = query.genres.has(value);
 
   // Function to toggle genres in the query
   const toggleGenre = (genresSet, genre) => {
@@ -52,7 +53,7 @@ const Checkbox = props => {
   };
 
   // Handle checkbox click event
-  const handleClick = e => {
+  const handleChange = e => {
     const { value } = e.target.dataset;
 
     const newQuery = { ...query, page: 1 };
@@ -80,25 +81,17 @@ const Checkbox = props => {
   return (
     <div className="checkbox-wrapper">
       {/* Checkbox input */}
-      {isSeason || isSortOption ? (
-        <input
-          data-value={value}
-          type="checkbox"
-          onClick={handleClick}
-          id={randomId}
-          className="checkbox"
-          checked={currentSeason === value || sortOption === value}
-          readOnly
-        />
-      ) : (
-        <input
-          data-value={value}
-          type="checkbox"
-          onClick={handleClick}
-          id={randomId}
-          className="checkbox"
-        />
-      )}
+
+      <input
+        data-value={value}
+        type="checkbox"
+        onChange={handleChange}
+        id={randomId}
+        className="checkbox"
+        checked={
+          currentSeason === value || sortOption === value || genreSelected
+        }
+      />
 
       {/* Label for the checkbox */}
       <label htmlFor={randomId} className="field-value block font-medium">

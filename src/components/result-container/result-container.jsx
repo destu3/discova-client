@@ -6,7 +6,7 @@ const ResultContainer = props => {
   const { data, loading, moreLoading } = props;
 
   return (
-    <section className="search-results w-full transition-all duration-300 p-1">
+    <section className="search-results w-full transition-all duration-300 p-1 pt-0">
       {/* Render skeleton cards while loading */}
       {loading
         ? Array.from({ length: 20 }).map((_, index) => (
