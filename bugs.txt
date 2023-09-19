@@ -1,5 +1,0 @@
-increase the gap space between last form field and the picture preview *
-make input only accept jpeg and png files for images *
-stop zoom increasing when an input is selected (mobile) *
-show loading indicator when auth requests are made
-fix infinite scroll bug
