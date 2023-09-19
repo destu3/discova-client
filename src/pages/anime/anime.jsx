@@ -33,7 +33,7 @@ const Anime = () => {
   });
 
   return (
-    <div className="wrapper absolute top-0 left-0 w-full h-screen">
+    <div className="wrapper relative bottom-[70px]">
       {animeInfo ? (
         <animated.div
           aria-label="anime-content"
@@ -62,7 +62,7 @@ const Anime = () => {
             }}
             className="poster-banner xs:hidden w-full h-[400px]"
           ></div>
-          <main className="mt-2 pt-[2px] p-2 pb-4 sm:container mx-auto">
+          <main className="px-2 sm:container mx-auto">
             <MainContent animeInfo={animeInfo} />
           </main>
         </animated.div>

@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <header
       style={{ '--tw-bg-opacity': 0.5 }}
-      className="w-full bg-background relative z-50 h-20"
+      className="w-full bg-background relative z-50 h-[70px]"
     >
       <nav className="sm:container mx-auto h-full flex items-center justify-between pr-[12px]">
         {/* Logo */}
