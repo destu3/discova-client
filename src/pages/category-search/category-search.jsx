@@ -75,46 +75,32 @@ const CategorySearch = ({ name }) => {
   // Handle load more action
   const handleLoadMore = async () => {
     if (noMoreData === false) {
-      const scrollPosition = document.documentElement.scrollTop;
-      const windowHeight = document.documentElement.clientHeight;
-      const scrollHeight = document.documentElement.scrollHeight;
+      const newQuery = { ...query, page: ++query.page };
 
-      // Calculate 95% of scroll height and round it down
-      const eightyPercentScrollHeight = Math.floor(0.95 * scrollHeight);
+      setQuery(newQuery);
+      setMoreLoading(true);
 
-      if (scrollPosition + windowHeight >= eightyPercentScrollHeight) {
-        const newQuery = { ...query, page: ++query.page };
-
-        setQuery(newQuery);
-        setMoreLoading(true);
-
-        try {
-          const results = await search(newQuery);
-          const mediaArray = handleDuplicates(data, results.mediaArray);
-          const appended = [...data, ...mediaArray];
-          setData(appended);
-          setMoreLoading(false);
-        } catch (err) {
-          showAlert(err.message, setAlert, true);
-          setNoMoreData(true);
-          setMoreLoading(false);
-        }
+      try {
+        const results = await search(newQuery);
+        const mediaArray = handleDuplicates(data, results.mediaArray);
+        const appended = [...data, ...mediaArray];
+        setData(appended);
+        setMoreLoading(false);
+      } catch (err) {
+        showAlert(err.message, setAlert, true);
+        setNoMoreData(true);
+        setMoreLoading(false);
       }
     }
   };
 
   useEffect(() => {
     defaultSearch();
+
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
   }, []);
-
-  // Render results with search=""
-  useEffect(() => {
-    document.addEventListener('scroll', handleLoadMore);
-
-    return () => {
-      document.removeEventListener('scroll', handleLoadMore);
-    };
-  }, [data, noMoreData]);
 
   return (
     <div className="relative p-2" aria-label={`content-type-${name}`}>
@@ -199,6 +185,13 @@ const CategorySearch = ({ name }) => {
             moreLoading={moreLoading}
             data={data}
           />
+          <button
+            onClick={handleLoadMore}
+            className={`load-more-btn px-5 py-3 mt-4 transition-all duration-200 shadow-[rgba(0,0,0,0.16)_0px_3px_6px,rgba(0,0,0,0.23)_0px_3px_6px]
+             rounded bg-[#1e1e1ee6] hover:bg-[#252525e6] text-[var(--main-text)] font-medium text-[0.95rem]`}
+          >
+            Show More Results
+          </button>
         </div>
       </div>
     </div>

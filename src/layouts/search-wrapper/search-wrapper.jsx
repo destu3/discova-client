@@ -5,7 +5,6 @@ import { Outlet } from 'react-router-dom';
 const SearchWrapper = () => {
   useEffect(() => {
     document.title = 'Search Anime - Discova';
-    document.documentElement.scrollIntoView();
   }, []);
 
   return (
