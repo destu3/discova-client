@@ -5,9 +5,7 @@ import { showAlert } from './alert-utils';
 import { addEntryToList, removeAnimeFromList } from '../services/api/user';
 
 // Retrieves the current year.
-export function getYear() {
-  const currentSeason = getSeason();
-
+export function getYear(currentSeason) {
   const year = new Date().getFullYear();
 
   // Get the current year
@@ -58,7 +56,6 @@ export function getSeason() {
     season = 'Summer';
   }
 
-  // Convert the season to uppercase and return it
   return season;
 }
 

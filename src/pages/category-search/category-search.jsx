@@ -44,7 +44,7 @@ const CategorySearch = ({ name }) => {
         setData([]);
         setLoading(false);
       }
-    }, 700);
+    }, 350);
 
     setDebounceId(timeoutId);
   };
@@ -95,11 +95,11 @@ const CategorySearch = ({ name }) => {
   };
 
   useEffect(() => {
-    defaultSearch();
-
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 0);
+    defaultSearch().then(() => {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      });
+    });
   }, []);
 
   return (
@@ -185,13 +185,15 @@ const CategorySearch = ({ name }) => {
             moreLoading={moreLoading}
             data={data}
           />
-          <button
-            onClick={handleLoadMore}
-            className={`load-more-btn px-5 py-3 mt-4 transition-all duration-200 shadow-[rgba(0,0,0,0.16)_0px_3px_6px,rgba(0,0,0,0.23)_0px_3px_6px]
+          {data.length >= 20 && (
+            <button
+              onClick={handleLoadMore}
+              className={`load-more-btn px-5 py-3 mt-10 transition-all duration-200 shadow-[rgba(0,0,0,0.16)_0px_3px_6px,rgba(0,0,0,0.23)_0px_3px_6px]
              rounded bg-[#1e1e1ee6] hover:bg-[#252525e6] text-[var(--main-text)] font-medium text-[0.95rem]`}
-          >
-            Show More Results
-          </button>
+            >
+              Show More Results
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -17,6 +17,8 @@ register();
 
 const Home = () => {
   const { currentUser } = useContext(UserContext);
+  const season = getSeason();
+  const nextSeason = getNextSeason();
 
   useEffect(() => {
     document.title = 'Discova - Home';
@@ -51,7 +53,7 @@ const Home = () => {
           dataFetcher={getPopularThisSeason}
           ariaLabel="Seasons trending section"
           title="Popular this Season"
-          filter={{ sort: 'Popularity', season: getSeason(), year: getYear() }}
+          filter={{ sort: 'Popularity', season, year: getYear(season) }}
         />
 
         {/* Upcoming Section */}
@@ -61,8 +63,8 @@ const Home = () => {
           title="Coming next Season"
           filter={{
             sort: 'Popularity',
-            season: getNextSeason(),
-            year: getYear(),
+            season: nextSeason,
+            year: getYear(nextSeason),
           }}
         />
 
