@@ -57,6 +57,7 @@ const SignUpForm = () => {
     if (!file) return;
 
     reader.readAsDataURL(file); // reads the file and returns a dataURL with the data represented as a base64 encoded string
+
     reader.onload = function () {
       const result = this.result;
       setFields({ ...fields, image: result });

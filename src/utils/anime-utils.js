@@ -5,11 +5,11 @@ import { showAlert } from './alert-utils';
 import { addEntryToList, removeAnimeFromList } from '../services/api/user';
 
 // Retrieves the current year.
-export function getYear(currentSeason) {
+export function getYear() {
   const year = new Date().getFullYear();
 
   // Get the current year
-  return currentSeason === 'Winter' ? year + 1 : year;
+  return year;
 }
 
 // determines the season and year based on a release date argument
